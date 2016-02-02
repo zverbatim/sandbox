@@ -1,0 +1,67 @@
+/**
+ Docs: https://docs.gradle.org/current/userguide/tutorial_java_projects.html
+ */
+
+// common behaviour for all projects
+allprojects {
+    task runStatus << { task -> println "Running: $task.project.name" }
+}
+
+// common for all subprojects
+subprojects {
+
+    runStatus << { println "Now in subprojects " }
+
+    // compile, test, and build a jar
+    apply plugin: "java"
+
+    // add intellij files
+    apply plugin: "idea"
+
+    // change java plugin default values. specify version nr. & add to manifest
+    sourceCompatibility = 1.5
+    version = 1.0
+    jar {
+        manifest {
+            attributes 'Implementation-Title': 'Gradle Java Demo',
+                    'Implementation-Version': version
+        }
+    }
+
+    // add the maven repo to resolve the dependencies
+    repositories {
+        mavenCentral()
+    }
+
+    // add the dependencies
+    dependencies {
+        compile group: 'commons-collections', name: 'commons-collections', version: '3.2'
+        testCompile group: 'junit', name: 'junit', version: '4.+'
+    }
+
+    // change java plugin default values.specify version nr. & add to manifest
+    sourceCompatibility = 1.5
+    version = 1.0
+    jar {
+        manifest {
+            attributes 'Implementation-Title': 'Gradle Java Demo',
+                    'Implementation-Version': version,
+                    'provider': 'gradle'
+        }
+    }
+
+    // adding test property when running the _test_ task
+    test {
+        systemProperties 'property-a': 'value-a'
+        systemProperties 'property-b': 'value-b'
+    }
+
+    // pushing the jar to a file(remote host also supported)
+    uploadArchives {
+        repositories {
+            flatDir {
+                dirs 'repos'
+            }
+        }
+    }
+}
