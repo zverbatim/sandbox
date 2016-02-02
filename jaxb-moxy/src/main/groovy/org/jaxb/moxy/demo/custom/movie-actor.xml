@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<movie year="2014">
+    <title>The Grand Hotel Budapest</title>
+    <cast>
+        <role>M.Gustave</role>
+        <actor id="1">
+            <firstName>Ralph</firstName>
+            <lastName>Finnes</lastName>
+        </actor>
+    </cast>
+    <cast>
+        <role>Ludwig</role>
+        <actor id="2">
+            <firstName>Harvey</firstName>
+            <lastName>Keitel</lastName>
+        </actor>
+    </cast>
+    <cast>
+        <role>Clotilde</role>
+        <actor id="3">
+            <firstName>Lea</firstName>
+            <lastName>Seydoux</lastName>
+        </actor>
+    </cast>
+</movie>
