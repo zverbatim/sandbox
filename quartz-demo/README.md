@@ -1,7 +1,7 @@
 # Quartz Demo
 
 ## About
-Print an ascii cat using the crontab styled string scheduler for quartz plugin
+Print an ascii cats using the crontab styled string scheduler for quartz plugin
 ```
     /\___/\
    (  o o  )
