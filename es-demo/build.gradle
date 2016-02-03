@@ -1,0 +1,20 @@
+apply plugin: "groovy"
+apply plugin: "idea"
+
+repositories {
+    mavenCentral()
+    maven { url "http://dl.bintray.com/groovy/maven" }
+    maven { url "http://jcenter.bintray.com" }
+
+}
+
+dependencies {
+    compile 'org.codehaus.groovy:groovy-all:2.4.5'
+    compile 'org.elasticsearch:elasticsearch:2.2.0'
+    testCompile 'org.spockframework:spock-core:1.0-groovy-2.4'
+}
+
+
+test {
+    jvmArgs '-Des.path.home=$ES_HOME'
+}
