@@ -1,7 +1,9 @@
 # Quartz Demo
 
 ## About
-Print an ascii cats using the crontab styled string scheduler for quartz plugin
+Print ascii cats using the crontab styled string scheduler for quartz plugin.
+Objects can be passed to the `Job.class` with [`.usingJobData("key", "value")`](http://quartz-scheduler.org/documentation/quartz-2.x/tutorials/tutorial-lesson-03).
+
 ```
     /\___/\
    (  o o  )
