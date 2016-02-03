@@ -11,6 +11,7 @@ repositories {
 dependencies {
     compile 'org.codehaus.groovy:groovy-all:2.4.5'
     compile 'org.elasticsearch:elasticsearch:2.2.0'
+    compile 'com.vividsolutions:jts:1.13'
     testCompile 'org.spockframework:spock-core:1.0-groovy-2.4'
 }
 

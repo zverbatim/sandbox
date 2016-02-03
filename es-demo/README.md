@@ -1,4 +1,4 @@
-# Elastic Search(es) demo
+# Elastic Search (es) demo
 
 ## About
 Using the java api for es 2.2
