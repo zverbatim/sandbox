@@ -12,3 +12,6 @@ Demo how class can be marshalled to and XML and vice versa using annotation
 - For groovy classes use `@XmlAccessorType(XmlAccessType.NONE)`, [stackoverflow](http://stackoverflow.com/questions/1161147/how-do-i-get-groovy-and-jaxb-to-play-nice-together)
 - For annotation to work need to have under the package the `jaxb.properties` filewith the specification `javax.xml.bind.context.factory=org.eclipse.persistence.jaxb.JAXBContextFactory`
 
+## Twitter api
+[Docs](https://dev.twitter.com/rest/public/search)
+Currently using `https://api.twitter.com/1.1/search/tweets.json?q=%23mars`. %23 = #, %40=#
