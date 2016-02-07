@@ -12,8 +12,13 @@
         </tr>
         <tr>
             <td>Price:</td>
-            <td><input type="text" th:field="*{price}"/></td>
+            <td><input type="text" th:field="*{price}" value=""/></td>
             <td th:if="${#fields.hasErrors('price')}" th:errors="*{price}">Price Error</td>
+        </tr>
+        <tr>
+            <td>Description:</td>
+            <td><textarea th:field="*{description}"></textarea></td>
+            <td th:if="${#fields.hasErrors('description')}" th:errors="*{description}">Description Error</td>
         </tr>
         <tr>
             <td>

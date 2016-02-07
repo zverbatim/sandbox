@@ -1,15 +1,25 @@
 package hello;
 
-import javax.validation.constraints.Min;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 
 public class ProductForm {
 
-    @Size(min = 2, max = 50)
+    @Size(min = 2, max = 20)
     String name;
 
-    @Min(0)
+    @DecimalMin("0.01")
     double price;
+
+    @Size(min = 2, max = 250)
+    String description;
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
     public String getName() {
         return name;
