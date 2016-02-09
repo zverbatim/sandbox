@@ -1,20 +1,20 @@
 package bookmarks;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import java.util.HashSet;
-import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Account {
 
     @OneToMany(mappedBy = "account")
-    private Set<Bookmark> bookmarks = new HashSet<Bookmark>();
+    private Set<Bookmark> bookmarks = new HashSet<>();
 
     @Id
     @GeneratedValue
