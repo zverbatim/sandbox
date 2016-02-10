@@ -7,4 +7,5 @@ repositories {
 
 dependencies {
     compile 'org.codehaus.groovy:groovy-all:2.4.5'
+    compile 'org.eclipse.persistence:org.eclipse.persistence.moxy:2.5.2'
 }

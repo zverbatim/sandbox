@@ -3,6 +3,8 @@
 ## Docs and credits
 - [Very good quick start docs](https://wiki.eclipse.org/EclipseLink/Examples/MOXy/GettingStarted)
 - [Gradle groovy plugin docs](https://docs.gradle.org/current/userguide/groovy_plugin.html)
+- [Google tutorial](https://wiki.eclipse.org/EclipseLink/Examples/MOXy/JSON_Geocode)
+
 
 
 ## About
