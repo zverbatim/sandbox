@@ -1,14 +1,20 @@
 package org.apacheconfig.demo
 
 class App {
-    static void main(String[] args) {
-        //init the file
-        def file = new File("etc/this.properties")
+    def file = new File(Properties.fileName)
+
+    def init() {
         file.text = ""
         file << "product.color=khaki\n"
         file << "product.version=1900\n"
+    }
 
-        // init the properties
+
+    static void main(String[] args) {
+        App app = new App()
+        app.init()
+
+        // initial properties
         Reader.run()
 
         // check what's in
@@ -16,7 +22,7 @@ class App {
         assert Properties.config.getProperty("product.version") == "1900"
 
         // add a new property
-        file << "product.market=us\n"
+        app.file << "product.market=us\n"
 
         // force the refresh, yet working on sleep(20000)
         Properties.config.refresh()
