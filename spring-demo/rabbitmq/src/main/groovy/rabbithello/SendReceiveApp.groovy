@@ -8,19 +8,29 @@ import com.rabbitmq.client.Consumer
 import com.rabbitmq.client.DefaultConsumer
 import com.rabbitmq.client.Envelope
 
-class Receive {
+/**
+ * Created by imunteanu on 2/14/16.
+ */
+class SendReceiveApp {
 
     private final static String QUEUE_NAME = "hello";
+    private final static String MESSAGE = "Hello world. (rabbit mq)"
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Exception{
         ConnectionFactory factory = new ConnectionFactory()
         factory.setHost("localhost")
-        Connection connection = factory.newConnection()
+        Connection connection =  factory.newConnection()
         Channel channel = connection.createChannel()
-
         channel.queueDeclare(QUEUE_NAME, false, false, false, null)
-        System.out.println(" [*] Waiting for messages. To exit press CTRL+C")
 
+        // sending a string
+        channel.basicPublish("", QUEUE_NAME, null, MESSAGE.getBytes("UTF-8"));
+        println "Message sent: $MESSAGE"
+
+        println "Waiting ..."
+        sleep(3000L)
+
+        // receiving
         Consumer consumer = new DefaultConsumer(channel) {
 
             @Override
@@ -31,5 +41,8 @@ class Receive {
             }
         };
         channel.basicConsume(QUEUE_NAME, true, consumer);
+
+        channel.close()
+        connection.close()
     }
 }
