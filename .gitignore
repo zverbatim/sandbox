@@ -4,3 +4,5 @@
 **/.gradle
 $ES_HOME
 .asscache
+.DS_Store
+
