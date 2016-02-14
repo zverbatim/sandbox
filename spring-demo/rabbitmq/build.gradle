@@ -12,6 +12,9 @@ apply plugin: 'eclipse'
 apply plugin: 'idea'
 apply plugin: 'spring-boot'
 apply plugin: 'groovy'
+apply plugin: 'application'
+
+mainClassName="hello.Application"
 
 jar {
     baseName = 'gs-messaging-rabbitmq'
