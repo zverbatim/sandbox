@@ -29,9 +29,11 @@ sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 dependencies {
-    compile 'org.codehaus.groovy:groovy-all:2.4.5'
-    compile("org.springframework.boot:spring-boot-starter-amqp")
-    testCompile("junit:junit")
+    compile "org.codehaus.groovy:groovy-all:2.4.5"
+    compile "org.springframework.boot:spring-boot-starter-amqp"
+
+    // rabbit mq java client
+    compile "com.rabbitmq:amqp-client:3.6.0"
 }
 
 task wrapper(type: Wrapper) {
