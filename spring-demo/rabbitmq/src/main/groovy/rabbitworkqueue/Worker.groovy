@@ -10,9 +10,9 @@ import com.rabbitmq.client.Envelope
 
 
 public class Worker {
-    private static final String TASK_QUEUE_NAME = "task_queue"
+    private final String TASK_QUEUE_NAME = "task_queue"
 
-    public static void main(String[] argv) throws Exception {
+    public void run() throws Exception {
 
         ConnectionFactory factory = new ConnectionFactory()
         factory.setHost("localhost")
@@ -46,8 +46,8 @@ public class Worker {
      * @param task
      */
     private static void doWork(String task) {
-        println "Start doWork()"
-        sleep(task.count(".") * 1000)
-        println "End doWork()"
+        def duration = task.count(".")
+        println "doing work for $duration secs"
+        sleep(duration * 1000)
     }
 }
