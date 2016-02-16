@@ -5,4 +5,5 @@
 $ES_HOME
 .asscache
 .DS_Store
+**/target
 
