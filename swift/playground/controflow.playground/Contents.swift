@@ -1,5 +1,5 @@
 /*
-    SWIFT - control flow
+SWIFT - control flow
 */
 
 import UIKit
@@ -7,14 +7,14 @@ import UIKit
 var currency = ("USD", 100)
 
 switch currency{
-    case ("EUR", _):
-        print("it' EUR")
-    case ("USD", 200):
-        print("USD  = 200")
-    case (_, 100):
-        print("it's a 100")
-    default:
-        print("hz")
+case ("EUR", _):
+    print("it' EUR")
+case ("USD", 200):
+    print("USD  = 200")
+case (_, 100):
+    print("it's a 100")
+default:
+    print("hz")
 }
 
 

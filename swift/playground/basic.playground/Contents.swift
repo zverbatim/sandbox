@@ -1,7 +1,7 @@
 
 /*
-    SWIFT  - The basic
-    Notes from swift documentation
+SWIFT  - The basic
+Notes from swift documentation
 */
 
 import UIKit
@@ -34,8 +34,8 @@ print(cat)
 
 var maxInt = UInt64.min
 
-/* 
-    literals
+/*
+literals
 */
 var binaryNumber = 0b100
 binaryNumber == 4
@@ -51,7 +51,7 @@ var billion = 1_000_000_00.000_4
 
 
 /*
-    conversion
+conversion
 */
 var three = 3
 var restOfPi : Double = 0.14
@@ -59,7 +59,7 @@ var fullPi = Double(three) + restOfPi
 
 
 /*
-    booleans
+booleans
 */
 if true{
     print("Hello")
@@ -71,7 +71,7 @@ if 2 != 3 {
 
 
 /*
-    tuples
+tuples
 */
 var temp = ("Chicago", 77)
 var (city, degrees) = temp
@@ -81,7 +81,7 @@ var completedTemp = (city: "Washington", degrees :  "80")
 completedTemp.degrees == "80"
 
 /*
-    optional
+optional
 */
 var defaultNil : String?
 defaultNil == nil
@@ -91,17 +91,17 @@ var noDefault : String
 
 
 /*
-    optional binding
+optional binding
 */
 if var a = Int("100") where a < 456 {
-  print ("\(a) < 456")
+    print ("\(a) < 456")
 } else {
     print("should not get here")
 }
 
 
 /*
-    error handling
+error handling
 */
 func division( a : Int,  b: Int)  throws {
     a / b
@@ -117,7 +117,7 @@ var n :Int = 10
 //division(a : n, b : n)
 
 /*
-    error handling
+error handling
 */
 assert(4 < 100)
 4 == 100
@@ -126,7 +126,7 @@ assert(4 < 100)
 
 
 /*
-    operators
+operators
 */
 var a = 10
 var b  = a > 10 ? a : -3
