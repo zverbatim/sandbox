@@ -6,4 +6,4 @@ $ES_HOME
 .asscache
 .DS_Store
 **/target
-
+**/node_modules

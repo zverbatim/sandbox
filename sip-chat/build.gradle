@@ -15,7 +15,7 @@ apply plugin: "spring-boot"
 
 
 jar {
-    baseName = "sip-chat"
+    baseName = "sip-client"
     version = "1.0"
 }
 
@@ -24,11 +24,17 @@ targetCompatibility = 1.8
 
 repositories {
     mavenCentral()
+    maven { url "http://jcenter.bintray.com" }
 }
 
 
 dependencies {
-    compile("org.springframework.boot:spring-boot-starter-websocket")
+    compile "org.springframework.boot:spring-boot-starter-websocket"
+    compile 'org.codehaus.groovy:groovy-all:2.4.5'
+    compile "javax.sip:jain-sip:1.2.76"
+    compile "javax.sip:jain-sip-ri:1.2.264"
+    compile "javax.sip:jain-sip-api:1.2.1.4"
+    compile "log4j:log4j:1.2.17"
 }
 
 task wrapper(type: Wrapper) {
