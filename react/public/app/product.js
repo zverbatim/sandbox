@@ -6,57 +6,56 @@ var data = [
 ];
 
 var ProductBox = React.createClass({
-        getInitialState: function () {
-            return {data: this.props.data};
-        },
+    getInitialState: function () {
+        return {data: this.props.data};
+    },
 
-        filterText: function (filterTerm) {
-            if (filterTerm) {
-                return _.filter(this.state.data, function (productItem) {
-                    var allStrings = (productItem.name + productItem.price).toLowerCase();
-                    return allStrings.search(filterTerm.toLowerCase()) >= 0;
-                })
-            } else {
-                // if empty string list all data
-                return this.props.data
-            }
-        },
-
-        filterCheckBox: function (filterTerm) {
-            if (filterTerm) {
-                return _.filter(this.state.data, function (productItem) {
-                    return productItem.available === "true"
-                });
-            } else {
-                //if not checked all data
-                return this.props.data
-            }
-        },
-
-        filterProduct: function (event) {
-            var filterData = [];
-            if (event.target.type == "text") {
-                filterData = this.filterText(event.target.value);
-            } else if (event.target.type == "checkbox") {
-                filterData = this.filterCheckBox(event.target.checked);
-            }
-
-            this.setState({data: filterData});
-            console.log("---");
-            console.log(filterData);
-        },
-
-        render: function () {
-            return (
-                <div className="productBox">
-                    <h1> Product Box </h1>
-                    <ProductForm filterProduct={this.filterProduct}/>
-                    <ProductList data={this.state.data}/>
-                </div>
-            )
+    filterText: function (filterTerm) {
+        if (filterTerm) {
+            return _.filter(this.state.data, function (productItem) {
+                var allStrings = (productItem.name + productItem.price).toLowerCase();
+                return allStrings.search(filterTerm.toLowerCase()) >= 0;
+            })
+        } else {
+            // if empty string list all data
+            return this.props.data
         }
-    })
-    ;
+    },
+
+    filterCheckBox: function (filterTerm) {
+        if (filterTerm) {
+            return _.filter(this.state.data, function (productItem) {
+                return productItem.available === "true"
+            });
+        } else {
+            //if not checked all data
+            return this.props.data
+        }
+    },
+
+    filterProduct: function (event) {
+        var filterData = [];
+        if (event.target.type == "text") {
+            filterData = this.filterText(event.target.value);
+        } else if (event.target.type == "checkbox") {
+            filterData = this.filterCheckBox(event.target.checked);
+        }
+
+        this.setState({data: filterData});
+        console.log("---");
+        console.log(filterData);
+    },
+
+    render: function () {
+        return (
+            <div className="productBox">
+                <h1> Product Box </h1>
+                <ProductForm filterProduct={this.filterProduct}/>
+                <ProductList data={this.state.data}/>
+            </div>
+        )
+    }
+});
 
 var ProductForm = React.createClass({
     filter: function (e) {
