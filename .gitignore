@@ -7,3 +7,4 @@ $ES_HOME
 .DS_Store
 **/target
 **/node_modules
+**/out
