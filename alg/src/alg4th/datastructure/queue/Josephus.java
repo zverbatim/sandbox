@@ -1,5 +1,6 @@
 package alg4th.datastructure.queue;
 
+
 import alg4th.datastructure.linkedlists.Node;
 
 /**
