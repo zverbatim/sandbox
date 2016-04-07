@@ -8,3 +8,4 @@ $ES_HOME
 **/target
 **/node_modules
 **/out
+**/*.class

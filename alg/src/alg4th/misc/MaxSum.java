@@ -2,6 +2,9 @@ package alg4th.misc;
 
 import edu.princeton.cs.algs4.StdRandom;
 
+/**
+ * Calculated the maximum of sum when adding consecutive array elements
+ */
 public class MaxSum {
 
     public static void print(int[] t) {
