@@ -21,6 +21,4 @@ public class ArrayUtil {
         }
         System.out.println();
     }
-
-
 }
