@@ -1,4 +1,4 @@
-package alg4th.misc.classicseries;
+package alg4th.misc;
 
 public class ReverseString {
 

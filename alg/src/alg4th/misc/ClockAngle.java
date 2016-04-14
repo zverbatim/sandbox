@@ -1,4 +1,4 @@
-package alg4th.misc.classicseries;
+package alg4th.misc;
 
 /**
  * Angel between hour and minute for a time.

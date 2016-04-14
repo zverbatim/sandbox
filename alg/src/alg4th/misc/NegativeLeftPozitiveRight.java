@@ -1,4 +1,4 @@
-package alg4th.misc.classicseries;
+package alg4th.misc;
 
 /**
  * Place the < 0 to the left and the >0 to the right

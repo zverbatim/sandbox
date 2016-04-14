@@ -1,4 +1,4 @@
-package alg4th.misc.classicseries;
+package alg4th.misc;
 
 /**
  * How many zeros at the end in a n!

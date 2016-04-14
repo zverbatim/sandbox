@@ -1,4 +1,4 @@
-package alg4th.misc.classicseries;
+package alg4th.misc;
 
 import java.util.ArrayList;
 import java.util.Collections;
