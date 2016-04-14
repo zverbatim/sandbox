@@ -1,7 +1,10 @@
 package alg4th.misc;
 
 /**
- * Created by imunteanu on 4/13/16.
+ * Take such expression: 1 + 2 ) * 3 - 4 ) * 5- 6 ) ) )
+ * and complete the parenthesis: ( ( 1 + 2 ) * ( ( 3 -4 ) * ( 5 - 6 ) )
  */
 public class CloseParanthesis {
+
+
 }
