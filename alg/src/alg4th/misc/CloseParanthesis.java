@@ -34,7 +34,7 @@ public class CloseParanthesis {
                 String temp = "(" + b + signStack.pop() + a + ")";
                 numberStack.push(temp);
             } else {
-                throw new RuntimeException("unsupported char");
+                throw new RuntimeException("unsupported char: " + s);
             }
         }
 
