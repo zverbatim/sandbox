@@ -19,13 +19,25 @@ public class LinkedList {
         return n == 0;
     }
 
+    /**
+     * Set the head & tail when starting fresh
+     *
+     * @param node the node element
+     */
     private void init(Node node) {
         head = node;
         tail = node;
         n++;
     }
 
+    /**
+     * Chain nodes
+     *
+     * @param node    the node element
+     * @param addHead if true add to head, if false add to tail
+     */
     public void add(Node node, boolean addHead) {
+
         // check if it's a fresh start
         if (size() == 0) {
             init(node);
@@ -41,23 +53,61 @@ public class LinkedList {
             head.prev = temp;
             node.next = head;
             head = node;
+            head.next.prev = node;
         } else {
             temp.prev = tail;
             tail.next = node;
             tail = node;
+            node.prev = temp.prev;
         }
         n++;
     }
 
     public void delete(Object item) {
         // nothing if empty
-        if (size() == 0) return;
+        if (size() == 0) {
+            emptyLog();
+            return;
+        }
 
-        // set the new head
+        for (Node node = head; node != null; node = node.next) {
+            if (node.item == item) {
+                // single element
+                if (node.prev == null && node.next == null) {
+                    head = null;
+                    tail = null;
+                }
+                // remove the head case
+                else if (node.prev == null & node.next != null) {
+                    head = node.next;
+                    head.prev = null;
+                }
+                // middle
+                else if (node.prev != null && node.next != null) {
+                    Node p = node.prev;
+                    node.prev.next = node.next;
+                    node.next.prev = p;
+                }
+                // tail
+                else {
+                    tail = node.prev;
+                    tail.next = null;
+                }
+
+                node = null;
+                n--;
+                return;
+            }
+        }
+
+        System.out.println("Element not found");
     }
 
     public void print() {
-        if (size() == 0) emptyLog();
+        if (size() == 0) {
+            emptyLog();
+            return;
+        }
 
         System.out.println("Linked List has " + size() + " elements");
         System.out.println("Head : " + head.item);
@@ -72,24 +122,27 @@ public class LinkedList {
         }
     }
 
+
+    /**
+     * not the most efficient way
+     */
     public void removeDups() {
-        if (size() == 0) emptyLog();
+        if (size() == 0) {
+            emptyLog();
+            return;
+        }
         int c = 0;
-        if (head == null) return;
-        Node previous = head;
-        Node current = previous.next;
+        Node current = head;
         while (current != null) {
-            Node runner = head;
-            while (runner != current) { // Check for earlier dups
+            Node runner = current.next;
+            while (runner != null) {
                 if (runner.item == current.item) {
-                    Node tmp = current.next; // remove current previous.next = tmp;
-                    current = tmp; // update current to next node break; // all other dups have already been removed
+                    delete(runner.item);
+                    c++;
                 }
                 runner = runner.next;
             }
-            if (runner == current) { // current not updated - update now previous = current;
-                current = current.next;
-            }
+            current = current.next;
         }
         System.out.println("Deleted " + c + " dups");
     }

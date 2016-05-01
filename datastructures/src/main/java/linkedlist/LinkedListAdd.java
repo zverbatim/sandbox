@@ -11,8 +11,10 @@ public class LinkedListAdd {
         String[] words = {"a", "b", "c", "d"};
 
         for (String w : words) {
+            // the pass is by reference therefore create a new node
+            // so it it behaves as expected
             llHead.add(new Node<String>(w), true);
-            llTail.add(new Node<String>(w), false);
+//            llTail.add(new Node<String>(w), false);
         }
 
         System.out.println("Add to head linked list");
