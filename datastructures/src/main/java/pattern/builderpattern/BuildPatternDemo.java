@@ -7,7 +7,7 @@ public class BuildPatternDemo {
 
     public static void main(String[] args) {
         ShipmentBuilder shipmentBuilder = new ShipmentBuilder();
-        Shipment books = shipmentBuilder.bookShippment();
+        Shipment books = shipmentBuilder.bookShipment();
         Shipment posters = shipmentBuilder.posterShipment();
 
         books.display();

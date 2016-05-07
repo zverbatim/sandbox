@@ -7,7 +7,7 @@ import pattern.builderpattern.product.PosterRomanHoliday;
 
 public class ShipmentBuilder {
 
-    public Shipment bookShippment(){
+    public Shipment bookShipment(){
         Shipment shipment = new Shipment();
         shipment.addItem(new BookHemingway());
         shipment.addItem(new BookChristie());
