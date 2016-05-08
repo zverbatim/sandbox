@@ -1,5 +1,7 @@
 package alg4th.util;
 
+import java.util.List;
+
 public class ArrayUtil {
 
     private final static int LIMIT = 100;
@@ -18,6 +20,13 @@ public class ArrayUtil {
     public void print(Comparable[] t) {
         for (int i = 0; i < t.length; i++) {
             System.out.print(t[i] + " ");
+        }
+        System.out.println();
+    }
+
+    public void print(List<Integer> t) {
+        for (int i = 0; i < t.size(); i++) {
+            System.out.print(t.get(i) + " ");
         }
         System.out.println();
     }
