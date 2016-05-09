@@ -7,7 +7,7 @@ import java.util.List;
 
 
 /**
- * Shuffler with no for a 0...n-1 range.
+ * QueueShuffler with no for a 0...n-1 range.
  * Using the "dead" principle by placing the element at the head of the list.
  */
 public class ShufflerNoReplacement {
