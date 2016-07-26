@@ -11,7 +11,7 @@ public class DepthFirstSearchPath {
     int count;                  //  how many are connected
     boolean[] marked;           //  if it is connected to start vertex
     int[] edgeTo;               //  last connection that was passed through
-    final int start;    //  start vertex that is tested that has path to w
+    final int start;            //  start vertex that is tested that has path to w
 
     public DepthFirstSearchPath(Graph g, int start) {
         this.start = start;

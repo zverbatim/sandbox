@@ -1,5 +1,6 @@
 package alg4th.graph;
 
+import alg4th.datastructure.priorityqueue.PriorityQueueImpl;
 import edu.princeton.cs.algs4.Graph;
 
 import java.util.HashMap;
@@ -90,5 +91,7 @@ public class ConnectedComponents {
 
         ConnectedComponents cc = new ConnectedComponents(g);
         cc.printComponents();
+
+        PriorityQueueImpl
     }
 }
