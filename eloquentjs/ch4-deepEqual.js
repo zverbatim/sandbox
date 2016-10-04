@@ -11,6 +11,8 @@ function deepEqual(a, b) {
         return false;
     if (typeof a != typeof b)
         return false;
+
+    return JSON.stringify(a) == JSON.stringify(b);
 }
 
 var obj = {here: {is: "an"}, object: 2};
