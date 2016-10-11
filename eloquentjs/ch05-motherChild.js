@@ -17,7 +17,6 @@ function average(array) {
     return array.reduce(plus) / array.length;
 }
 
-
 var haveMother = function (n) {
     return n.mother != undefined && byName[n.mother] != undefined;
 };

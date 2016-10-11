@@ -19,7 +19,6 @@ for (var i = 1; i <= 100; i++) {
 
 
 // more elegant and a fewer if condition
-
 for (var i = 1; i <= 100; i++) {
     var text = "";
     if (i % 3 == 0)

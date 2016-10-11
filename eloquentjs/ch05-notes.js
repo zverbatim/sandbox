@@ -149,7 +149,7 @@ console.log(ancestry.filter(function(person) {
 }));
 
 // with bind key word
-console.log(ancestry.filter(isInSet.bind(null, theSet)))
+console.log(ancestry.filter(isInSet.bind(null, theSet)));
 
 
 
