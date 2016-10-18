@@ -1,3 +1,26 @@
+/**
+    Summary:
+    --------------------------------------------------------
+    /abc/	    A sequence of characters
+    /[abc]/	    Any character from a set of characters
+    /[^abc]/	Any character not in a set of characters
+    /[0-9]/	    Any character in a range of characters
+    /x+/	    One or more occurrences of the pattern x
+    /x+?/	    One or more occurrences, nongreedy
+    /x?/	    Zero or one occurrence
+    /x{2,4}/	Between two and four occurrences
+    /(abc)/	    A group
+    /a|b|c/	    Any one of several patterns
+    /\d/	    Any digit character
+    /\w/	    An alphanumeric character (“word character”)
+    /\s/	    Any whitespace character
+    /./	        Any character except newlines
+    /\b/	    A word boundary
+    /^/	        Start of input
+    /$/	        End of input
+ */
+
+
 var abc = new RegExp("abc");
 var _abc = /abc/;
 
@@ -41,4 +64,5 @@ console.log("one two 100".match(/\d+/));
 console.log("one two 100".match(/\d+/).pop());
 
 // groups with ()
-console.log(/(\d)+/.exec("123 14"));
+console.log("123 14".match(/\d+$/));
+console.log("123 14".match(/^\d+/));
