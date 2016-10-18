@@ -28,7 +28,13 @@ var config = {
             }
             }
         ]
-    }
+    },
+    plugins: [
+        new webpack.optimize.UglifyJsPlugin({
+            minimize:true
+        })
+    ]
+
 };
 
-module.exports = config
+module.exports = config;
