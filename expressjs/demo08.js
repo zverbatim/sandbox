@@ -5,18 +5,25 @@ var path = require("path");
 var app = express();
 
 var exphbs = require('express-handlebars');
+app.set('views', path.join(__dirname, 'demo08/views'));
 
 // passing the layout can configure if using bootstrap or foundations
 app.engine('handlebars', exphbs({
     defaultLayout: 'main',
+
+    // Overwrite default location
+    layoutsDir: path.resolve(__dirname, 'demo08/views/layouts'),
+
     // Uses multiple partials dirs, templates in "shared/templates/" are shared
     // with the client-side of the app (see below).
     partialsDir: [
-        'shared/templates/',
-        'views/partials/'
+        'demo08/shared/templates/',
+        'demo08/views/partials/'
     ]
 }));
+
 app.set('view engine', 'handlebars');
+
 app.set('port', process.env.PORT || 3000);
 var options = {
     dotfiles: 'ignore',             // How dot files are treated
@@ -34,7 +41,7 @@ app.use(express.static(path.join(__dirname, 'public'), options));
 function exposeTemplates(req, res, next) {
     // Uses the `ExpressHandlebars` instance to get the get the **precompiled**
     // templates which will be shared with the client-side of the app.
-    hbs.getTemplates('shared/templates/', {
+    hbs.getTemplates('demo08/shared/templates/', {
         cache: app.enabled('view cache'),
         precompiled: true
     }).then(function (templates) {
