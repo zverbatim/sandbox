@@ -1,24 +1,35 @@
-var letters = [{order: 0, value: 'a'}, {order: 1, value: 'b'}, {order: 2, value: 'c'}];
+// will hold all the messages submitted via the form
+var messages = [];
 
+var http = require('http');
 var express = require('express');
 var path = require("path");
+var logger = require('morgan');
+var exphbs = require('express-handlebars');
+var bodyParser = require('body-parser');
+
 var app = express();
 
-var exphbs = require('express-handlebars');
-app.set('views', path.join(__dirname, 'demo08/views'));
+app.use(logger("dev"));
+
+// gets the req.body variable when a form is submitted
+// extend option is required
+app.use(bodyParser.urlencoded({extended: false}));
+
+app.set('views', path.join(__dirname, 'demo09/views'));
 
 // passing the layout can configure if using bootstrap or foundations
 app.engine('handlebars', exphbs({
     defaultLayout: 'main',
 
     // Overwrite default location
-    layoutsDir: path.resolve(__dirname, 'demo08/views/layouts'),
+    layoutsDir: path.resolve(__dirname, 'demo09/views/layouts'),
 
     // Uses multiple partials dirs, templates in "shared/templates/" are shared
     // with the client-side of the app (see below).
     partialsDir: [
-        'demo08/shared/templates/',
-        'demo08/views/partials/'
+        'demo09/shared/templates/',
+        'demo09/views/partials/'
     ]
 }));
 
@@ -35,7 +46,23 @@ var options = {
 app.use(express.static(path.join(__dirname, 'public'), options));
 
 app.get('/', function (req, res) {
-    res.render('main', {body: 'Hello World using handlebars!', letters: letters});
+    res.render('main');
+});
+
+app.post('/submit-entry', function (req, res) {
+    console.log('req.body = ', req.body);
+    if (!req.body.message) {
+        res.status(403);
+        res.send("brrr ... empty body")
+        return;
+    }
+    messages.push(req.body.message);
+    res.redirect('entries');
+});
+
+app.get('/entries', function (req, res) {
+    console.log("entries:", messages);
+    res.render('entries', {messages: messages});
 });
 
 app.use(express.static('public/'));
