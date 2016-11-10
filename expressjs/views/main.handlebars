@@ -1,0 +1,23 @@
+{{!-- Include a template.
+    The passed object should contain the needed values
+    to populate the template  --}}
+{{> nav}}
+
+{{!-- Template with conditional tokens --}}
+{{#if body}}
+    <h1>{{{body}}}</h1>
+{{else}}
+    <h1>Hello when the body is not passed</h1>
+{{/if}}
+
+
+{{!-- Using the each "sugar" --}}
+<ul>
+{{#each letters}}
+    <li>{{value}}</li>
+{{/each}}
+</ul>
+
+<hr>
+{{!-- using partials aka template --}}
+{{> letters}}
