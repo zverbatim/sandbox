@@ -35,7 +35,7 @@ function exposeTemplates(req, res, next) {
     // Uses the `ExpressHandlebars` instance to get the get the **precompiled**
     // templates which will be shared with the client-side of the app.
     hbs.getTemplates('shared/templates/', {
-        cache      : app.enabled('view cache'),
+        cache: app.enabled('view cache'),
         precompiled: true
     }).then(function (templates) {
             // RegExp to remove the ".handlebars" extension from the template names.
@@ -45,7 +45,7 @@ function exposeTemplates(req, res, next) {
             // `res.locals.templates`.
             templates = Object.keys(templates).map(function (name) {
                 return {
-                    name    : name.replace(extRegex, ''),
+                    name: name.replace(extRegex, ''),
                     template: templates[name]
                 };
             });
@@ -64,13 +64,9 @@ app.get('/', function (req, res) {
     res.render('main', {body: 'Hello World using handlebars!', letters: letters});
 });
 
-//app.listen(app.get('port'), function () {
-//    console.log('Express started on http://localhost:' +
-//        app.get('port') + '. Ctrl-C to terminate.');
-//});
-
 app.use(express.static('public/'));
 
-app.listen(3000, function () {
-    console.log('express-handlebars example server listening on: 3000');
+app.listen(app.get('port'), function () {
+    console.log('Express started on http://localhost:' +
+        app.get('port') + '. Ctrl-C to terminate.');
 });
