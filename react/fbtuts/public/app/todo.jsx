@@ -1,3 +1,12 @@
+class Alert extends React.Component {
+
+    render() {
+        return (
+            <div>{this.props.alert}</div>
+        )
+    }
+}
+
 class Items extends React.Component {
     render() {
         return (
@@ -10,25 +19,37 @@ class Items extends React.Component {
     }
 }
 
-
 class App extends React.Component {
     constructor(props) {
         super(props);
 
-        // these 2 need the bind so the `setState` is defined when is ran inside the function
+        // these 3 need the bind so the `setState` is defined when is ran inside the function
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleAlert = this.handleAlert.bind(this);
 
         // if they are not defined here, then error on rendering
-        this.state = {items: [], inputTask: ''}
+        this.state = {items: [], inputTask: '', alert: ''}
+    }
+
+    handleAlert(e) {
+        this.setState({
+            alert: 'task cannot be empty'
+        })
     }
 
     handleChange(e) {
-        this.setState({inputTask: e.target.value})
+        this.setState({inputTask: e.target.value, alert: ''})
     }
 
     handleSubmit(e) {
         e.preventDefault();
+
+        if (this.state.inputTask.length === 0) {
+            this.handleAlert()
+            return
+        }
+
         const newItem = {id: new Date(), text: this.state.inputTask};
         this.setState((prevState)=>({
             items: prevState.items.concat(newItem),
@@ -40,6 +61,7 @@ class App extends React.Component {
         return (<div>
             <h1>TODO</h1>
             <p>version {this.props.version}</p>
+            <Alert alert={this.state.alert}/>
             <Items items={this.state.items}/>
             <form onSubmit={this.handleSubmit}>
                 <input name="task" placeholder="..." onChange={this.handleChange} value={this.state.inputTask}/>
