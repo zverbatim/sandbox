@@ -5,21 +5,27 @@
   "main": "demo00.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon demo13.js"
+    "start": "nodemon demo13.js",
+    "build": "babel demo14 -d build",
+    "demo": "babel demo14/demo14-all.js",
+    "foo": "babel-cli demo14/foo.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.15.2",
+    "csv-parse": "^1.1.7",
     "express": "^4.14.0",
     "express-handlebars": "^3.0.0",
     "fs": "0.0.1-security",
     "http": "0.0.0",
     "morgan": "^1.7.0",
     "mustache-express": "^1.2.2",
-    "path": "^0.12.7"
+    "path": "^0.12.7",
   },
   "devDependencies": {
+    "babel-cli": "^6.18.0",
+    "babel-core": "^6.18.2",
     "nodemon": "^1.11.0"
   }
 }
