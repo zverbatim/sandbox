@@ -8,7 +8,9 @@
     "start": "nodemon demo13.js",
     "build": "babel demo14 -d build",
     "demo": "babel demo14/demo14-all.js",
-    "foo": "babel-cli demo14/foo.js"
+    "foo": "babel-cli demo14/foo.js",
+    "demo15": "babel-node --presets es2015 demo15/demo15.js",
+    "demo16": "babel-node --presets es2015 demo16/demo16.js"
   },
   "author": "",
   "license": "ISC",
@@ -22,10 +24,12 @@
     "morgan": "^1.7.0",
     "mustache-express": "^1.2.2",
     "path": "^0.12.7",
+    "sleep": "^5.0.0"
   },
   "devDependencies": {
     "babel-cli": "^6.18.0",
     "babel-core": "^6.18.2",
+    "babel-preset-es2015": "^6.18.0",
     "nodemon": "^1.11.0"
   }
 }
