@@ -10,71 +10,88 @@ class InlineContainer extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            data: props.data
-        }
+            data: props.data,
+            indexOfEditing: props.indexOfEditing
+        };
+        this.editElement = this.editElement.bind(this);
+        this.saveElement = this.saveElement.bind(this);
     }
 
+    editElement(index) {
+        this.setState({
+            indexOfEditing: index
+        });
+    };
+
+    saveElement(modifiedValue, index) {
+        console.log(modifiedValue, "", index)
+        this.setState((prev) => ({
+            data: prev.data.map((v, i)=>{
+                return i === index ? modifiedValue : v;
+            })
+        }))
+    };
+
     render() {
-        return(
-            <div>
-                <InlineEdit text={this.state.data[0]} index={0}/>
-                <InlineEdit text={this.state.data[1]} index={1}/>
-                <InlineEdit text={this.state.data[2]} index={2}/>
-                <InlineEdit text={this.state.data[3]} editing={true} index={3}/>
-            </div>
+        const indexOfEditing = this.state.indexOfEditing;
+        const editElement = this.editElement;
+        const saveElement = this.saveElement;
+        const edits = this.state.data.map(function (it, i) {
+            return <InlineEdit text={it} index={i} key={i} editing={indexOfEditing === i}
+                               editElement={editElement}
+                               saveElement={saveElement}/>
+        });
+
+        return (
+            <div> {edits} </div>
         );
     }
 }
 
 class InlineEdit extends React.Component {
-    constructor(props){
+    constructor(props) {
         super(props);
 
-        this.state = {
-            editing: props.editing,
-            text: props.text
-        };
-
-
-        this.editElement = this.editElement.bind(this);
         this.keyAction = this.keyAction.bind(this);
         this.render = this.render.bind(this);
+        this.onDoubleClickEdit = this.onDoubleClickEdit.bind(this);
+
     }
 
-    editElement(index) {
-        this.setState({editing: true}, function() {
-             //Focus and select all text
-            $(this.refs.textField.getDOMNode()).select();
-        });
-    };
+    onDoubleClickEdit() {
+        let i = this.props.index;
+        console.log(i)
+        this.props.editElement(i)
+    }
 
     keyAction(e) {
-        console.log(e.keyCode)
-        if(e.keyCode === 13) {
+        console.log(e.target.value)
+        if (e.keyCode === 13) {
             // Enter to save
-            this.setState({text: e.target.value, editing: false});
-        } else if(e.keyCode === 27) {
+            this.props.editElement(-1);
+            this.props.saveElement(e.target.value, this.props.index)
+        } else if (e.keyCode === 27) {
             // ESC to cancel
-            this.setState({editing: false});
+            this.props.editElement(-1);
         }
     };
 
-    renderElement(){
+    renderElement() {
         let renderContent = "";
-        if(this.state.editing) {
+        if (this.props.editing) {
             renderContent = (
                 <div>
                     <input
                         type="text"
                         onKeyDown={this.keyAction}
-                        defaultValue={this.state.text}
-                        ref="textField" />
+                        defaultValue={this.props.text}
+                        ref="textField"/>
                 </div>
             );
         } else {
             renderContent = (
-                <div onDoubleClick={this.editElement}>
-                    {this.state.text}
+                <div onDoubleClick={this.onDoubleClickEdit}>
+                    {this.props.text}
                 </div>
             );
         }
@@ -88,4 +105,4 @@ class InlineEdit extends React.Component {
 
 // entry point
 var mountNode = document.getElementById('content');
-ReactDOM.render(<InlineContainer data={data}/>, mountNode);
+ReactDOM.render(<InlineContainer data={data} indexOfEditing={0}/>, mountNode);
