@@ -1,24 +1,25 @@
 /*********************************
  reducers
  *********************************/
-
-const todo = (state, action) => {
+const todo = (state= {}, action) => {
     switch (action.type) {
         case 'ADD_TODO':
             return {id: action.id, text: action.text, complete: false};
         case 'TOGGLE_TODO':
             return action.id === state.id ? {...state, complete: !state.complete} : state;
         default:
-            return false;
+            return state;
     }
 };
 
-const todos = (state, action) => {
+const todos = (state = [], action) => {
     switch (action.type) {
         case  'ADD_TODO':
             return [...state, todo(undefined, action)];
         case 'TOGGLE_TODO':
-            return state.map((v, i) => todo(v, action))
+            return state.map((v, i) => todo(v, action));
+        default:
+            return state;
     }
 };
 
@@ -33,11 +34,13 @@ const visibilityFilter = (state = 'SHOW_ALL',
 };
 
 
-/*********************************
- store stuff
- *********************************/
 
-const {createStore} = Redux;
+/*********************************
+ redux store creation an subscription
+ *********************************/
+const {createStore, combineReducers} = Redux;
+let todoApp = combineReducers(todos, visibilityFilter);
+let store = createStore(todoApp);
 
 
 /*********************************
@@ -52,24 +55,67 @@ const Todo = () => {
 const Todos = ()=> {
 };
 
+const FilterLink = ({children}) => {
+    return (
+        <a href="#">
+            {children}
+        </a>
+    )
+};
 
+
+let nextId = 0;
 class App extends React.Component {
     render() {
         return (
             <div>
                 <input placeholder="..."/>
-                <button>
+                {' '}
+                <button onClick={()=>{
+                    store.dispatch({
+                    type: 'ADD_TODO',
+                    text: 'foo',
+                    id:nextId++
+                })
+                }}>
                     add
                 </button>
+
                 <ul>
-                    <li>foo</li>
-                    <li>bar</li>
+                    {this.props.todos.map((todo) => {
+                        return (<li key={todo.key}>{todo.text}</li>)
+                    })}
                 </ul>
+
+                <p>
+                    <FilterLink>All</FilterLink>
+                    {' '}
+                    <FilterLink>Complete</FilterLink>
+                    {' '}
+                    <FilterLink>Incomplete</FilterLink>
+                </p>
+
             </div>
         )
     }
 }
-ReactDOM.render(<App/>, document.getElementById('root'));
+
+const render = () => {
+    ReactDOM.render(
+        <App todos={store.getState().todos}/>,
+        document.getElementById('root')
+    )
+};
+
+
+
+
+/*********************************
+ diplay stuff to DOM
+ *********************************/
+
+//store.subscribe(render);
+//render();
 
 
 /*********************************
@@ -95,6 +141,17 @@ const testAdd = () => {
         .toEqual(after);
 };
 
+const testTodos = () => {
+    let store = createStore(todos);
+    expect(store.getState())
+        .toEqual([]);
+};
+
+const testTodoApp = () => {
+    const before = {todos: [], visibility};
+};
 testAdd();
 testToggle();
+testTodos();
+
 console.log("test completed");
