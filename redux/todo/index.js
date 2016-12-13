@@ -91,7 +91,12 @@ const Todos = ({
     )
 };
 
-const FilterLink = ({filter, current, children}) => {
+const FilterLink = ({
+    filter,
+    current,
+    onClick,
+    children
+}) => {
     if (current) {
         return <span>{children}</span>
     }
@@ -99,12 +104,9 @@ const FilterLink = ({filter, current, children}) => {
         return (
             <a
                 href="#"
-                onClick={(e) => {
+                onClick={e => {
                     e.preventDefault();
-                    store.dispatch({
-                        type: 'SET_VISIBILITY_FILTER',
-                        filter: filter
-                    })
+                    onClick(filter);
                 }}
             >
                 {children}
@@ -113,23 +115,59 @@ const FilterLink = ({filter, current, children}) => {
     }
 };
 
-const Header = () => {
-    let currentFilter = store.getState().visibilityFilter;
+const Header = ({
+    currentFilter,
+    onClick
+}) => {
     return (
         <p>
-            <FilterLink filter={'SHOW_ALL'} current={currentFilter === 'SHOW_ALL'}>
+            <FilterLink
+                filter={'SHOW_ALL'}
+                current={currentFilter === 'SHOW_ALL'}
+                onClick={onClick}
+            >
                 All
             </FilterLink>
             {' '}
-            <FilterLink filter={'SHOW_ACTIVE'} current={currentFilter === 'SHOW_ACTIVE'}>
+            <FilterLink
+                filter={'SHOW_ACTIVE'}
+                current={currentFilter === 'SHOW_ACTIVE'}
+                onClick={onClick}
+            >
                 Active
             </FilterLink>
             {' '}
-            <FilterLink filter={'SHOW_COMPLETE'} current={currentFilter === 'SHOW_COMPLETE'}>
+            <FilterLink
+                filter={'SHOW_COMPLETE'}
+                current={currentFilter === 'SHOW_COMPLETE'}
+                onClick={onClick}
+            >
                 Completed
             </FilterLink>
             {' '}
         </p>
+    )
+};
+
+const AddTodo = ({
+    onAddClick
+}) => {
+    let input;
+    return (
+        <div>
+            <input type="text"
+                   ref={(node) => input = node}
+            />
+            {' '}
+            <button onClick={() => {
+                if (input.value) {
+                    onAddClick(input.value);
+                    input.value = ''
+                }
+            }}>
+                add
+            </button>
+        </div>
     )
 };
 
@@ -145,25 +183,23 @@ class App extends React.Component {
 
         return (
             <div>
-                <Header/>
-
-                <input type="text"
-                       ref="inputAdd"
-                />
-                {' '}
-                <button onClick={() => {
-                    if (this.refs.inputAdd.value) {
+                <Header
+                    currentFilter={store.getState().visibilityFilter}
+                    onClick={ filter => {
                         store.dispatch({
-                            type: 'ADD_TODO',
-                            text: this.refs.inputAdd.value,
-                            id: nextId++
-                        });
-                        this.refs.inputAdd.value = ''
-                    }
-                }
-                }>
-                    add
-                </button>
+                            type: 'SET_VISIBILITY_FILTER',
+                            filter: filter
+                        })
+                    }}
+                />
+
+                <AddTodo onAddClick={text => {
+                    store.dispatch({
+                        type: 'ADD_TODO',
+                        id: nextId++,
+                        text
+                    });
+                }}/>
 
                 <Todos
                     todos={visibleTodos}
