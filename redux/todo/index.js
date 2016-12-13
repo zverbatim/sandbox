@@ -173,46 +173,41 @@ const AddTodo = ({
 
 
 let nextId = 0;
-class App extends React.Component {
-
-    render() {
-        const visibleTodos = getVisibleTodos(
-            this.props.todos,
-            this.props.visibilityFilter
-        );
-
-        return (
-            <div>
-                <Header
-                    currentFilter={store.getState().visibilityFilter}
-                    onClick={ filter => {
-                        store.dispatch({
-                            type: 'SET_VISIBILITY_FILTER',
-                            filter: filter
-                        })
-                    }}
-                />
-
-                <AddTodo onAddClick={text => {
+const App = ({
+    todos,
+    visibilityFilter
+}) => {
+    return (
+        <div>
+            <Header
+                currentFilter={store.getState().visibilityFilter}
+                onClick={ filter => {
                     store.dispatch({
-                        type: 'ADD_TODO',
-                        id: nextId++,
-                        text
-                    });
-                }}/>
+                        type: 'SET_VISIBILITY_FILTER',
+                        filter: filter
+                    })
+                }}
+            />
 
-                <Todos
-                    todos={visibleTodos}
-                    onTodoClick={id => {
-                        store.dispatch({
-                            type: 'TOGGLE_TODO',
-                            id
-                        })
-                    }}/>
-            </div>
-        )
-    }
-}
+            <AddTodo onAddClick={text => {
+                store.dispatch({
+                    type: 'ADD_TODO',
+                    id: nextId++,
+                    text
+                });
+            }}/>
+
+            <Todos
+                todos={getVisibleTodos(todos, visibilityFilter)}
+                onTodoClick={id => {
+                    store.dispatch({
+                        type: 'TOGGLE_TODO',
+                        id
+                    })
+                }}/>
+        </div>
+    )
+};
 
 const render = () => {
     ReactDOM.render(
