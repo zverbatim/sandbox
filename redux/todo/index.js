@@ -109,7 +109,7 @@ const Link = ({
 class FilterLink extends React.Component {
 
     componentDidMount() {
-        const {store} = this.props;
+        const {store} = this.context;
         this.unsuscribe = store.subscribe(() => this.forceUpdate())
     }
 
@@ -118,7 +118,7 @@ class FilterLink extends React.Component {
     }
 
     render() {
-        const {store} = this.props;
+        const {store} = this.context;
         const props = this.props;
         const state = store.getState();
         return (
@@ -136,27 +136,28 @@ class FilterLink extends React.Component {
         )
     }
 }
+FilterLink.contextTypes = {
+    store: React.PropTypes.object
+};
 
-const Header = ({store}) => {
+
+const Header = () => {
     return (
         <p>
             <FilterLink
                 filter={'SHOW_ALL'}
-                store={store}
             >
                 All
             </FilterLink>
             {' '}
             <FilterLink
                 filter={'SHOW_ACTIVE'}
-                store={store}
             >
                 Active
             </FilterLink>
             {' '}
             <FilterLink
                 filter={'SHOW_COMPLETE'}
-                store={store}
             >
                 Completed
             </FilterLink>
@@ -166,9 +167,8 @@ const Header = ({store}) => {
 };
 
 
-const AddTodo = ({store}) => {
+const AddTodo = (props, {store}) => {
     let input;
-    console.log("add strore", store)
     return (
         <div>
             <input type="text"
@@ -191,9 +191,13 @@ const AddTodo = ({store}) => {
     )
 };
 
+AddTodo.contextTypes = {
+    store: React.PropTypes.object
+};
+
 class VisibleTodos extends React.Component {
     componentDidMount() {
-        const {store} = this.props;
+        const {store} = this.context;
         this.unsuscribe = store.subscribe(() => this.forceUpdate())
     }
 
@@ -202,7 +206,7 @@ class VisibleTodos extends React.Component {
     }
 
     render() {
-        const {store} = this.props;
+        const {store} = this.context;
         const state = store.getState();
         return (
             <Todos
@@ -218,14 +222,37 @@ class VisibleTodos extends React.Component {
     }
 }
 
+// so it can receive it
+VisibleTodos.contextTypes = {
+    store: React.PropTypes.object
+};
+
+class Provider extends React.Component {
+    // !required to it can pass the store props to the children
+    // it is called by React
+    getChildContext() {
+        return {
+            store: this.props.store
+        }
+    }
+
+    render() {
+        return this.props.children;
+    }
+}
+//must specify the props type that will be sent down to the conxt
+Provider.childContextTypes = {
+    store: React.PropTypes.object
+};
+
 
 let nextId = 0;
-const App = ({store}) => {
+const App = () => {
     return (
         <div>
-            <Header store={store}/>
-            <AddTodo store={store}/>
-            <VisibleTodos store={store}/>
+            <Header />
+            <AddTodo />
+            <VisibleTodos />
         </div>
     )
 };
@@ -248,9 +275,9 @@ const todoApp = combineReducers({
  *********************************/
 
 ReactDOM.render(
-    <App
-        store={createStore(todoApp)}
-    />,
+    <Provider store={createStore(todoApp)}>
+        <App/>
+    </Provider>,
     document.getElementById('root')
 );
 
