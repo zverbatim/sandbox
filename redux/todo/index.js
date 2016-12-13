@@ -91,12 +91,12 @@ const Todos = ({
     )
 };
 
-const FilterLink = ({
-    filter,
+const Link = ({
     current,
     onClick,
     children
 }) => {
+
     if (current) {
         return <span>{children}</span>
     }
@@ -106,7 +106,7 @@ const FilterLink = ({
                 href="#"
                 onClick={e => {
                     e.preventDefault();
-                    onClick(filter);
+                    onClick()
                 }}
             >
                 {children}
@@ -115,32 +115,52 @@ const FilterLink = ({
     }
 };
 
-const Header = ({
-    currentFilter,
-    onClick
-}) => {
+class FilterLink extends React.Component {
+
+    componentDidMount() {
+        this.unsuscribe = store.subscribe(() => this.forceUpdate())
+    }
+
+    componentWillUnmount() {
+        this.unsuscribe();
+    }
+
+    render() {
+        const props = this.props;
+        const state = store.getState();
+        return (
+            <Link
+                current={state.visibilityFilter === props.filter}
+                onClick={() => {
+                    store.dispatch({
+                        type: 'SET_VISIBILITY_FILTER',
+                        filter: props.filter
+                    })
+                }}
+            >
+                {props.children}
+            </Link>
+        )
+    }
+}
+
+const Header = () => {
     return (
         <p>
             <FilterLink
                 filter={'SHOW_ALL'}
-                current={currentFilter === 'SHOW_ALL'}
-                onClick={onClick}
             >
                 All
             </FilterLink>
             {' '}
             <FilterLink
                 filter={'SHOW_ACTIVE'}
-                current={currentFilter === 'SHOW_ACTIVE'}
-                onClick={onClick}
             >
                 Active
             </FilterLink>
             {' '}
             <FilterLink
                 filter={'SHOW_COMPLETE'}
-                current={currentFilter === 'SHOW_COMPLETE'}
-                onClick={onClick}
             >
                 Completed
             </FilterLink>
@@ -149,9 +169,8 @@ const Header = ({
     )
 };
 
-const AddTodo = ({
-    onAddClick
-}) => {
+
+const AddTodo = () => {
     let input;
     return (
         <div>
@@ -161,7 +180,11 @@ const AddTodo = ({
             {' '}
             <button onClick={() => {
                 if (input.value) {
-                    onAddClick(input.value);
+                    store.dispatch({
+                        type: 'ADD_TODO',
+                        id: nextId++,
+                        text: input.value
+                    });
                     input.value = ''
                 }
             }}>
@@ -171,61 +194,56 @@ const AddTodo = ({
     )
 };
 
+class VisibleTodos extends React.Component {
+    componentDidMount() {
+        this.unsuscribe = store.subscribe(() => this.forceUpdate())
+    }
 
-let nextId = 0;
-const App = ({
-    todos,
-    visibilityFilter
-}) => {
-    return (
-        <div>
-            <Header
-                currentFilter={store.getState().visibilityFilter}
-                onClick={ filter => {
-                    store.dispatch({
-                        type: 'SET_VISIBILITY_FILTER',
-                        filter: filter
-                    })
-                }}
-            />
+    componentWillUnmount() {
+        this.unsuscribe();
+    }
 
-            <AddTodo onAddClick={text => {
-                store.dispatch({
-                    type: 'ADD_TODO',
-                    id: nextId++,
-                    text
-                });
-            }}/>
-
+    render() {
+        const state = store.getState();
+        return (
             <Todos
-                todos={getVisibleTodos(todos, visibilityFilter)}
+                todos={getVisibleTodos(state.todos, state.visibilityFilter)}
                 onTodoClick={id => {
                     store.dispatch({
                         type: 'TOGGLE_TODO',
                         id
                     })
-                }}/>
+                }}
+            />
+        )
+    }
+}
+
+
+let nextId = 0;
+const App = () => {
+    return (
+        <div>
+            <Header/>
+            <AddTodo/>
+            <VisibleTodos/>
         </div>
     )
 };
 
-const render = () => {
-    ReactDOM.render(
-        <App
-            todos={store.getState().todos}
-            visibilityFilter={store.getState().visibilityFilter}
-        />,
-        document.getElementById('root')
-    )
-};
-
-
 /*********************************
  display stuff to DOM
+ each container then handles
+ it's own subscribe to the store changes
  *********************************/
 
-store.subscribe(render);
-render();
+ReactDOM.render(
+    <App
+        todos={store.getState().todos}
+        visibilityFilter={store.getState().visibilityFilter}
+    />,
+    document.getElementById('root')
+);
 
 
 /*********************************
