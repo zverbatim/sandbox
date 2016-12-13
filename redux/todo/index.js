@@ -1,7 +1,7 @@
 /*********************************
  reducers
  *********************************/
-const todo = (state= {}, action) => {
+const todo = (state = {}, action) => {
     switch (action.type) {
         case 'ADD_TODO':
             return {id: action.id, text: action.text, complete: false};
@@ -17,31 +17,30 @@ const todos = (state = [], action) => {
         case  'ADD_TODO':
             return [...state, todo(undefined, action)];
         case 'TOGGLE_TODO':
-            return state.map((v, i) => todo(v, action));
+            return state.map(t => todo(t, action));
         default:
             return state;
     }
 };
 
-const visibilityFilter = (state = 'SHOW_ALL',
-                          action) => {
+const visibilityFilter = (state = 'SHOW_ALL', action) => {
     switch (action.type) {
         case 'SET_VISIBILITY_FILTER':
             return action.filter;
         default:
-            return state;
+            return state
     }
-};
-
-
+}
 
 /*********************************
  redux store creation an subscription
  *********************************/
 const {createStore, combineReducers} = Redux;
-let todoApp = combineReducers(todos, visibilityFilter);
-let store = createStore(todoApp);
-
+const todoApp = combineReducers({
+    todos,
+    visibilityFilter
+});
+const store = createStore(todoApp);
 
 /*********************************
  components
@@ -69,15 +68,20 @@ class App extends React.Component {
     render() {
         return (
             <div>
-                <input placeholder="..."/>
+                <input type="text"
+                       ref="inputAdd"
+                />
                 {' '}
                 <button onClick={()=>{
-                    store.dispatch({
-                    type: 'ADD_TODO',
-                    text: 'foo',
-                    id:nextId++
-                })
-                }}>
+                    if(this.refs.inputAdd.value){
+                        store.dispatch({
+                        type: 'ADD_TODO',
+                        text: this.refs.inputAdd.value,
+                        id:nextId++
+                    });
+                    this.refs.inputAdd.value = ''}
+                    }
+                }>
                     add
                 </button>
 
@@ -94,7 +98,6 @@ class App extends React.Component {
                     {' '}
                     <FilterLink>Incomplete</FilterLink>
                 </p>
-
             </div>
         )
     }
@@ -108,14 +111,11 @@ const render = () => {
 };
 
 
-
-
 /*********************************
  diplay stuff to DOM
  *********************************/
-
-//store.subscribe(render);
-//render();
+store.subscribe(render);
+render();
 
 
 /*********************************
@@ -148,10 +148,14 @@ const testTodos = () => {
 };
 
 const testTodoApp = () => {
-    const before = {todos: [], visibility};
+    const after = {todos: [], visibilityFilter: 'SHOW_ALL'};
+    let store = createStore(todoApp);
+    expect(store.getState())
+        .toEqual(after)
 };
 testAdd();
 testToggle();
 testTodos();
+testTodoApp();
 
 console.log("test completed");
