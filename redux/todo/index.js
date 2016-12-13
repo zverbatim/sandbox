@@ -30,7 +30,20 @@ const visibilityFilter = (state = 'SHOW_ALL', action) => {
         default:
             return state
     }
-}
+};
+
+const getVisibleTodos = (todos = [], filter) => {
+    switch (filter) {
+        case 'SHOW_ALL':
+            return todos;
+        case 'SHOW_ACTIVE':
+            return todos.filter(t => !t.complete)
+        case 'SHOW_COMPLETE':
+            return todos.filter(t => t.complete);
+        default:
+            return todos;
+    }
+};
 
 /*********************************
  redux store creation an subscription
@@ -51,53 +64,101 @@ const Todo = () => {
     )
 };
 
-const Todos = ()=> {
+const Todos = () => {
 };
 
-const FilterLink = ({children}) => {
+const FilterLink = ({filter, current, children}) => {
+    if (current) {
+        return <span>{children}</span>
+    }
+    else {
+        return (
+            <a
+                href="#"
+                onClick={(e) => {
+                    e.preventDefault();
+                    store.dispatch({
+                        type: 'SET_VISIBILITY_FILTER',
+                        filter: filter
+                    })
+                }}
+            >
+                {children}
+            </a>
+        )
+    }
+};
+
+const Header = () => {
+    let currentFilter = store.getState().visibilityFilter;
     return (
-        <a href="#">
-            {children}
-        </a>
+        <p>
+            <FilterLink filter={'SHOW_ALL'} current={currentFilter === 'SHOW_ALL'}>
+                All
+            </FilterLink>
+            {' '}
+            <FilterLink filter={'SHOW_ACTIVE'} current={currentFilter === 'SHOW_ACTIVE'}>
+                Active
+            </FilterLink>
+            {' '}
+            <FilterLink filter={'SHOW_COMPLETE'} current={currentFilter === 'SHOW_COMPLETE'}>
+                Completed
+            </FilterLink>
+            {' '}
+        </p>
     )
 };
 
 
 let nextId = 0;
 class App extends React.Component {
+
     render() {
+        const visibleTodos = getVisibleTodos(
+            this.props.todos,
+            this.props.visibilityFilter
+        );
+
         return (
             <div>
+                <Header/>
+
                 <input type="text"
                        ref="inputAdd"
                 />
                 {' '}
-                <button onClick={()=>{
-                    if(this.refs.inputAdd.value){
+                <button onClick={() => {
+                    if (this.refs.inputAdd.value) {
                         store.dispatch({
-                        type: 'ADD_TODO',
-                        text: this.refs.inputAdd.value,
-                        id:nextId++
-                    });
-                    this.refs.inputAdd.value = ''}
+                            type: 'ADD_TODO',
+                            text: this.refs.inputAdd.value,
+                            id: nextId++
+                        });
+                        this.refs.inputAdd.value = ''
                     }
+                }
                 }>
                     add
                 </button>
 
                 <ul>
-                    {this.props.todos.map((todo) => {
-                        return (<li key={todo.key}>{todo.text}</li>)
-                    })}
+                    {visibleTodos.map((todo) => {
+                        return (
+                            <li
+                                key={todo.key}
+                                onClick={ () => {
+                                    store.dispatch({
+                                        type: 'TOGGLE_TODO',
+                                        id: todo.id
+                                    })
+                                }}
+                                style={{textDecoration: todo.complete ? 'line-through' : 'none'}}
+                            >
+                                {todo.text}
+                            </li>)
+                    })
+                    }
                 </ul>
-
-                <p>
-                    <FilterLink>All</FilterLink>
-                    {' '}
-                    <FilterLink>Complete</FilterLink>
-                    {' '}
-                    <FilterLink>Incomplete</FilterLink>
-                </p>
             </div>
         )
     }
@@ -105,15 +166,19 @@ class App extends React.Component {
 
 const render = () => {
     ReactDOM.render(
-        <App todos={store.getState().todos}/>,
+        <App
+            todos={store.getState().todos}
+            visibilityFilter={store.getState().visibilityFilter}
+        />,
         document.getElementById('root')
     )
 };
 
 
 /*********************************
- diplay stuff to DOM
+ display stuff to DOM
  *********************************/
+
 store.subscribe(render);
 render();
 
