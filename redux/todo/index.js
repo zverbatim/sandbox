@@ -45,15 +45,6 @@ const getVisibleTodos = (todos = [], filter) => {
     }
 };
 
-/*********************************
- redux store creation an subscription
- *********************************/
-const {createStore, combineReducers} = Redux;
-const todoApp = combineReducers({
-    todos,
-    visibilityFilter
-});
-const store = createStore(todoApp);
 
 /*********************************
  components
@@ -118,6 +109,7 @@ const Link = ({
 class FilterLink extends React.Component {
 
     componentDidMount() {
+        const {store} = this.props;
         this.unsuscribe = store.subscribe(() => this.forceUpdate())
     }
 
@@ -126,6 +118,7 @@ class FilterLink extends React.Component {
     }
 
     render() {
+        const {store} = this.props;
         const props = this.props;
         const state = store.getState();
         return (
@@ -144,23 +137,26 @@ class FilterLink extends React.Component {
     }
 }
 
-const Header = () => {
+const Header = ({store}) => {
     return (
         <p>
             <FilterLink
                 filter={'SHOW_ALL'}
+                store={store}
             >
                 All
             </FilterLink>
             {' '}
             <FilterLink
                 filter={'SHOW_ACTIVE'}
+                store={store}
             >
                 Active
             </FilterLink>
             {' '}
             <FilterLink
                 filter={'SHOW_COMPLETE'}
+                store={store}
             >
                 Completed
             </FilterLink>
@@ -170,8 +166,9 @@ const Header = () => {
 };
 
 
-const AddTodo = () => {
+const AddTodo = ({store}) => {
     let input;
+    console.log("add strore", store)
     return (
         <div>
             <input type="text"
@@ -196,6 +193,7 @@ const AddTodo = () => {
 
 class VisibleTodos extends React.Component {
     componentDidMount() {
+        const {store} = this.props;
         this.unsuscribe = store.subscribe(() => this.forceUpdate())
     }
 
@@ -204,6 +202,7 @@ class VisibleTodos extends React.Component {
     }
 
     render() {
+        const {store} = this.props;
         const state = store.getState();
         return (
             <Todos
@@ -221,15 +220,26 @@ class VisibleTodos extends React.Component {
 
 
 let nextId = 0;
-const App = () => {
+const App = ({store}) => {
     return (
         <div>
-            <Header/>
-            <AddTodo/>
-            <VisibleTodos/>
+            <Header store={store}/>
+            <AddTodo store={store}/>
+            <VisibleTodos store={store}/>
         </div>
     )
 };
+
+
+/*********************************
+ redux store creation an subscription
+ *********************************/
+const {createStore, combineReducers} = Redux;
+const todoApp = combineReducers({
+    todos,
+    visibilityFilter
+});
+
 
 /*********************************
  display stuff to DOM
@@ -239,8 +249,7 @@ const App = () => {
 
 ReactDOM.render(
     <App
-        todos={store.getState().todos}
-        visibilityFilter={store.getState().visibilityFilter}
+        store={createStore(todoApp)}
     />,
     document.getElementById('root')
 );
