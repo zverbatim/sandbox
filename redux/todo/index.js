@@ -227,24 +227,6 @@ VisibleTodos.contextTypes = {
     store: React.PropTypes.object
 };
 
-class Provider extends React.Component {
-    // !required to it can pass the store props to the children
-    // it is called by React
-    getChildContext() {
-        return {
-            store: this.props.store
-        }
-    }
-
-    render() {
-        return this.props.children;
-    }
-}
-//must specify the props type that will be sent down to the conxt
-Provider.childContextTypes = {
-    store: React.PropTypes.object
-};
-
 
 let nextId = 0;
 const App = () => {
@@ -259,13 +241,14 @@ const App = () => {
 
 
 /*********************************
- redux store creation an subscription
+ redux
  *********************************/
 const {createStore, combineReducers} = Redux;
 const todoApp = combineReducers({
     todos,
     visibilityFilter
 });
+const {Provider}  = ReactRedux;
 
 
 /*********************************
