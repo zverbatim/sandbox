@@ -58,13 +58,37 @@ const store = createStore(todoApp);
 /*********************************
  components
  *********************************/
-const Todo = () => {
+const Todo = ({
+    text,
+    complete,
+    onClick
+}) => {
     return (
-        <li>....</li>
+        <li onClick={onClick}
+            style={{textDecoration: complete ? 'line-through' : 'none'}}
+        >
+            {text}
+        </li>
     )
 };
 
-const Todos = () => {
+const Todos = ({
+    todos,
+    onTodoClick
+}) => {
+    return (
+        <ul>
+            {todos.map((todo) => {
+                return (
+                    <Todo
+                        text={todo.text}
+                        complete={todo.complete}
+                        onClick={() => onTodoClick(todo.id)}
+                    />
+                )
+            })}
+        </ul>
+    )
 };
 
 const FilterLink = ({filter, current, children}) => {
@@ -141,24 +165,14 @@ class App extends React.Component {
                     add
                 </button>
 
-                <ul>
-                    {visibleTodos.map((todo) => {
-                        return (
-                            <li
-                                key={todo.key}
-                                onClick={ () => {
-                                    store.dispatch({
-                                        type: 'TOGGLE_TODO',
-                                        id: todo.id
-                                    })
-                                }}
-                                style={{textDecoration: todo.complete ? 'line-through' : 'none'}}
-                            >
-                                {todo.text}
-                            </li>)
-                    })
-                    }
-                </ul>
+                <Todos
+                    todos={visibleTodos}
+                    onTodoClick={id => {
+                        store.dispatch({
+                            type: 'TOGGLE_TODO',
+                            id
+                        })
+                    }}/>
             </div>
         )
     }
