@@ -136,6 +136,7 @@ class FilterLink extends React.Component {
         )
     }
 }
+
 FilterLink.contextTypes = {
     store: React.PropTypes.object
 };
