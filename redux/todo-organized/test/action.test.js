@@ -1,4 +1,4 @@
-import * as actions from "./index";
+import * as actions from "../src/actions/action";
 import deepFreeze from "deep-freeze";
 
 describe('action tests', () => {
@@ -25,7 +25,7 @@ describe('action tests', () => {
                 type: 'TOGGLE_TODO',
                 id: 1
             })
-    })
+    });
 
     it('SHOW_ALL displays all todos', () => {
         const before = [
@@ -79,7 +79,7 @@ describe('action tests', () => {
         expect(actions.getVisibleTodos(before, 'SHOW_ALL'))
             .toEqual(after);
         expect(actions.getVisibleTodos(before, 'SHOW_ACTIVE'))
-            .toEqual(after);``
+            .toEqual(after);
         expect(actions.getVisibleTodos(before, 'SHOW_COMPLETE'))
             .toEqual(after)
     })

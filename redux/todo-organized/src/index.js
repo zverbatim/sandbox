@@ -5,7 +5,15 @@ import { Provider } from 'react-redux'
 import App from './components/App'
 import reducer from './reducers/index'
 
-const store = createStore(reducer);
+import {loadStorage, saveStorage} from './util/local';
+
+const initialState = loadStorage();
+
+const store = createStore(reducer, initialState);
+
+store.subscribe( () => {
+   saveStorage(store.getState())
+});
 
 render(
     <Provider store={store}>
