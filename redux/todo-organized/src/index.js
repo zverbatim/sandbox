@@ -1,23 +1,11 @@
-import React from 'react'
-import { render } from 'react-dom'
-import { createStore } from 'redux'
-import { Provider } from 'react-redux'
-import App from './components/App'
-import reducer from './reducers/index'
+import React from "react";
+import {render} from "react-dom";
+import Root from './components/Root';
+import configureStore from './util/configureStore';
 
-import {loadStorage, saveStorage} from './util/local';
-
-const initialState = loadStorage();
-
-const store = createStore(reducer, initialState);
-
-store.subscribe( () => {
-   saveStorage(store.getState())
-});
+const store = configureStore();
 
 render(
-    <Provider store={store}>
-        <App />
-    </Provider>,
+    <Root store={store}/>,
     document.getElementById('root')
 );
