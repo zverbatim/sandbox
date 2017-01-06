@@ -2,8 +2,8 @@ import {connect} from "react-redux";
 import Todos from "../components/Todos";
 import {toggleTodo, getVisibleTodos} from "../actions/action";
 
-const mapStateToProps = (state) => ({
-    todos: getVisibleTodos(state.todos, state.visibilityFilter)
+const mapStateToProps = (state, ownProps) => ({
+    todos: getVisibleTodos(state.todos, ownProps.filter)
 });
 
 const mapDispatchToProps = ({

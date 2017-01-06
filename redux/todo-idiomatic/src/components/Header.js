@@ -1,23 +1,25 @@
 import React from 'react'
 import FilterLink from'../containers/FilterLink'
+import {ALL, ACTIVE, COMPLETED} from '../const/index'
+
 
 const Header = () => {
     return (
         <p>
             <FilterLink
-                filter={'all'}
+                filter={ALL}
             >
                 All
             </FilterLink>
             {' '}
             <FilterLink
-                filter={'active'}
+                filter={ACTIVE}
             >
                 Active
             </FilterLink>
             {' '}
             <FilterLink
-                filter={'completed'}
+                filter={COMPLETED}
                 >
                 Completed
             </FilterLink>
