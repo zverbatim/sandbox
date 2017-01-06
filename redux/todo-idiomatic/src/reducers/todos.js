@@ -1,4 +1,4 @@
-import {combineReducers} from 'redux'
+import {combineReducers} from "redux";
 import todo from "./todo";
 
 
@@ -34,7 +34,6 @@ const getAllTodos = (state) =>
 
 export const getVisibleTodos = (state, filter) => {
     const allTodos = getAllTodos(state);
-
     switch (filter) {
         case 'all':
             return allTodos;

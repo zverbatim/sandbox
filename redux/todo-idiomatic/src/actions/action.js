@@ -1,19 +1,26 @@
-import {v4} from 'uuid'
+import {v4} from "uuid";
+import * as api from "../api/index";
 
-const addTodo = (text) => ({
+const receiveTodos = (filter, response) => ({
+    type: 'RECEIVE_TODOS',
+    filter,
+    response
+})
+
+export const fetchTodos = (filter) =>
+    api.fetchTodos(filter).then(response =>
+        receiveTodos(filter, response)
+    );
+
+export const addTodo = (text) => ({
     type: 'ADD_TODO',
     text: text,
     id: v4()
 })
 
 
-const toggleTodo = (id) => ({
+export const toggleTodo = (id) => ({
     type: 'TOGGLE_TODO',
     id
 })
-
-module.exports = {
-    addTodo,
-    toggleTodo
-}
 

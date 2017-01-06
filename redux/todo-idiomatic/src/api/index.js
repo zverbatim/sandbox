@@ -9,17 +9,17 @@ const fakeDatabase = {
         {
             id: v4(),
             text: 'foo',
-            complete: false
+            completed: false
         },
         {
             id: v4(),
             text: 'bar',
-            complete: true
+            completed: true
         },
         {
             id: v4(),
             text: 'das',
-            complete: false
+            completed: false
         }
     ]
 }
@@ -27,7 +27,7 @@ const delay = (ms) =>
     new Promise(resolve => setTimeout(resolve, ms));
 
 export const fetchTodos = (filter) =>
-    delay(500).then(() => {
+    delay(100).then(() => {
         switch (filter) {
             case 'all':
                 return fakeDatabase.todos;

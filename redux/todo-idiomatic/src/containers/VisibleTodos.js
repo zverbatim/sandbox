@@ -1,25 +1,57 @@
-import {connect} from "react-redux"
-import {withRouter} from "react-router"
-import Todos from "../components/Todos"
-import {toggleTodo} from "../actions/action"
-import {getVisibleTodos} from '../reducers/index'
-import {ALL} from '../const/index'
+import React, {Component} from "react";
+import {connect} from "react-redux";
+import {withRouter} from "react-router";
+import Todos from "../components/Todos";
+import * as actions from "../actions/action";
+import {getVisibleTodos} from "../reducers/index";
+import {ALL} from "../const/index";
 
-const mapStateToProps = (state, {params}) => ({
-    todos: getVisibleTodos(state, params.filter || ALL)
-})
 
-// using the shorter notation
-// works when var name in dispatch = var name in the action creator
-const mapDispatchToProps = ({
-    onTodoClick: toggleTodo
-})
+/**
+ * Made to add lifecycle hooks
+ */
+class VisibleTodoList extends Component {
 
-const VisibleTodoList = withRouter(
-    connect(
-        mapStateToProps,
-        mapDispatchToProps
-    )(Todos)
-)
+    fetchData() {
+        const { filter, fetchTodos } = this.props;
+        fetchTodos(filter)
+    }
+
+    componentDidMount() {
+        this.fetchData()
+
+    }
+
+    componentDidUpdate(prevProps) {
+        if (this.props.filter !== prevProps.filter)
+            this.fetchData()
+    }
+
+    // Inside of `VisibleTodoList`
+    render() {
+        const { toggleTodo, ...rest } = this.props;
+        return (
+            <Todos
+                {...rest}
+                onTodoClick={toggleTodo}
+            />
+        );
+    }
+
+}
+
+
+const mapStateToProps = (state, {params}) => {
+    const filter = params.filter || ALL
+    return {
+        todos: getVisibleTodos(state, filter),
+        filter
+    }
+}
+
+VisibleTodoList = withRouter(connect(
+    mapStateToProps,
+    actions
+)(VisibleTodoList))
 
 export default VisibleTodoList
