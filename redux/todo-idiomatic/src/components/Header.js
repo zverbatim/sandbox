@@ -5,19 +5,19 @@ const Header = () => {
     return (
         <p>
             <FilterLink
-                filter={'SHOW_ALL'}
+                filter={'all'}
             >
                 All
             </FilterLink>
             {' '}
             <FilterLink
-                filter={'SHOW_ACTIVE'}
+                filter={'active'}
             >
                 Active
             </FilterLink>
             {' '}
             <FilterLink
-                filter={'SHOW_COMPLETE'}
+                filter={'completed'}
                 >
                 Completed
             </FilterLink>

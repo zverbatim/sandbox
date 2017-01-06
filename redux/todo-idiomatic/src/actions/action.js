@@ -6,10 +6,6 @@ const addTodo = (text) => ({
     id: v4()
 });
 
-const setVisibilityFilter = (filter) => ({
-    type: 'SET_VISIBILITY_FILTER',
-    filter
-});
 
 const toggleTodo = (id) => ({
     type: 'TOGGLE_TODO',
@@ -31,7 +27,6 @@ const getVisibleTodos = (todos, filter) => {
 
 module.exports = {
     addTodo,
-    setVisibilityFilter,
     toggleTodo,
     getVisibleTodos
 };

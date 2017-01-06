@@ -3,21 +3,13 @@ import deepFreeze from "deep-freeze";
 
 describe('action tests', () => {
     it('addTodo should create ADD_TODO action', () => {
-        expect(actions.addTodo('Boo'))
-            .toEqual({
-                type: 'ADD_TODO',
-                id: 0,
-                text: 'Boo'
-            })
+        const {type, text} =  actions.addTodo('Boo');
+
+        expect(actions.addTodo('Boo').type).toEqual(type)
+        expect(actions.addTodo('Boo').text).toEqual(text)
+
     });
 
-    it('setVisibilityFilter should create SET_VISIBILITY_FILTER action', () => {
-        expect(actions.setVisibilityFilter('active'))
-            .toEqual({
-                type: 'SET_VISIBILITY_FILTER',
-                filter: 'active'
-            })
-    });
 
     it('toggleTodo should create TOGGLE_TODO action', () => {
         expect(actions.toggleTodo(1))

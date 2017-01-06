@@ -1,4 +1,7 @@
-import { createStore } from 'redux'
+/**
+ * Function to handle the store creation
+ */
+import{ createStore } from 'redux'
 import throttle from 'lodash/throttle'
 import reducer from '../reducers/index'
 import {loadStorage, saveStorage} from './local';
