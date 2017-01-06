@@ -1,4 +1,3 @@
-import {ALL, ACTIVE, COMPLETED} from '../const/index'
 import {v4} from 'uuid'
 
 const addTodo = (text) => ({
@@ -13,23 +12,8 @@ const toggleTodo = (id) => ({
     id
 })
 
-const getVisibleTodos = (todos, filter) => {
-    console.log("filter=", filter)
-    switch (filter) {
-        case ALL:
-            return todos
-        case COMPLETED:
-            return todos.filter(t => t.complete)
-        case ACTIVE:
-            return todos.filter(t => !t.complete)
-        default:
-            return todos
-    }
-}
-
 module.exports = {
     addTodo,
-    toggleTodo,
-    getVisibleTodos
+    toggleTodo
 }
 
