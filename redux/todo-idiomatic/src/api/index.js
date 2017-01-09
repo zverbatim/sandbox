@@ -5,23 +5,19 @@
 import {v4} from "node-uuid";
 
 const fakeDatabase = {
-    todos: [
-        {
-            id: v4(),
-            text: 'foo',
-            completed: false
-        },
-        {
-            id: v4(),
-            text: 'bar',
-            completed: true
-        },
-        {
-            id: v4(),
-            text: 'das',
-            completed: false
-        }
-    ]
+    todos: [{
+        id: v4(),
+        text: 'foo',
+        completed: false
+    }, {
+        id: v4(),
+        text: 'bar',
+        completed: true
+    }, {
+        id: v4(),
+        text: 'das',
+        completed: false
+    }]
 }
 const delay = (ms) =>
     new Promise(resolve => setTimeout(resolve, ms));

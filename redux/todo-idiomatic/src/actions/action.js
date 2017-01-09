@@ -1,5 +1,5 @@
 import {v4} from "uuid";
-import * as api from "../api/index";
+import * as api from "../api";
 
 const receiveTodos = (filter, response) => ({
     type: 'RECEIVE_TODOS',

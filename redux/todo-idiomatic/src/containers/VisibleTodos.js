@@ -6,7 +6,6 @@ import * as actions from "../actions/action";
 import {getVisibleTodos} from "../reducers/index";
 import {ALL} from "../const/index";
 
-
 /**
  * Made to add lifecycle hooks
  */
@@ -19,7 +18,6 @@ class VisibleTodoList extends Component {
 
     componentDidMount() {
         this.fetchData()
-
     }
 
     componentDidUpdate(prevProps) {
@@ -30,6 +28,7 @@ class VisibleTodoList extends Component {
     // Inside of `VisibleTodoList`
     render() {
         const { toggleTodo, ...rest } = this.props;
+
         return (
             <Todos
                 {...rest}
@@ -37,9 +36,7 @@ class VisibleTodoList extends Component {
             />
         );
     }
-
 }
-
 
 const mapStateToProps = (state, {params}) => {
     const filter = params.filter || ALL
