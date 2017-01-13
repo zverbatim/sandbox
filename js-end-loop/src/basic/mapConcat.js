@@ -1,6 +1,5 @@
 'use strict'
 
-
 Object.assign(Array.prototype, {
     concatAll() {
         let results = [];
@@ -74,18 +73,7 @@ var movieLists = [
     }
 ];
 
-const foo = () => {
-
-
-
-    // Use one or more map, concatAll, and filter calls to create an array with the following items
-    // [
-    //	 {"id": 675465,"title": "Fracture","boxart":"http://cdn-0.nflximg.com/images/2891/Fracture150.jpg" },
-    //	 {"id": 65432445,"title": "The Chamber","boxart":"http://cdn-0.nflximg.com/images/2891/TheChamber150.jpg" },
-    //	 {"id": 654356453,"title": "Bad Boys","boxart":"http://cdn-0.nflximg.com/images/2891/BadBoys150.jpg" },
-    //	 {"id": 70111470,"title": "Die Hard","boxart":"http://cdn-0.nflximg.com/images/2891/DieHard150.jpg" }
-    // ];
-
+const test = () => {
     return movieLists
         .map((video) =>
             video.videos.map(v => {
@@ -107,18 +95,29 @@ Object.assign(Array.prototype, {
     }
 });
 
-console.log(foo())
+// Use one or more map, concatAll, and filter calls to create an array with the following items
+// [
+//	 {"id": 675465,"title": "Fracture","boxart":"http://cdn-0.nflximg.com/images/2891/Fracture150.jpg" },
+//	 {"id": 65432445,"title": "The Chamber","boxart":"http://cdn-0.nflximg.com/images/2891/TheChamber150.jpg" },
+//	 {"id": 654356453,"title": "Bad Boys","boxart":"http://cdn-0.nflximg.com/images/2891/BadBoys150.jpg" },
+//	 {"id": 70111470,"title": "Die Hard","boxart":"http://cdn-0.nflximg.com/images/2891/DieHard150.jpg" }
+// ];
+
+const result = movieLists.map(v => v.videos.map(v => v.id)).concatAll()
+const result2 = movieLists.mapConcat(v => v.videos.map(v => v.id))
+console.log(result)
+console.log(result2)
 
 
-console.log(
-    movieLists
-        .mapConcat((video) =>
-            video.videos.mapConcat(v => {
-                return v.boxarts.filter(b => b.width == 150)
-                    .map(b => ({
-                        id: v.id,
-                        title: v.title,
-                        boxart: b.url
-                    }))
-            }))
-)
+const result3 = movieLists
+    .mapConcat((video) =>
+        video.videos.mapConcat(v => {
+            return v.boxarts.filter(b => b.width == 150)
+                .map(b => ({
+                    id: v.id,
+                    title: v.title,
+                    boxart: b.url
+                }))
+        })
+    )
+console.log("result3 = ", result3)
