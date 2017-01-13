@@ -19,24 +19,132 @@ FILE=src/... npm run start
 ## Key Functions
 
 ### Map
+```js
+Array.prototype.map = function(projectionFunction) {
+	var results = [];
+	this.forEach(function(itemInArray){results.push(projectionFunction(itemInArray))
+	});
+	return results;
+};
+```
 
 ### Filter
+```js
+Array.prototype.filter = function(predicateFunction) {
+	var results = [];
+	this.forEach(function(itemInArray) {
+	  if (predicateFunction(itemInArray)) {
+		results.push(itemInArray);
+	  }
+	});
+	return results;
+};
+```
 
 ### Reduce
+```js
+Array.prototype.reduce = function(combiner, initialValue) {
+	var counter,
+		accumulatedValue;
+
+	// If the array is empty, do nothing
+	if (this.length === 0) {
+		return this;
+	}
+	else {
+		// If the user didn't pass an initial value, use the first item.
+		if (arguments.length === 1) {
+			counter = 1;
+			accumulatedValue = this[0];
+		}
+		else if (arguments.length >= 2) {
+			counter = 0;
+			accumulatedValue = initialValue;
+		}
+		else {
+			throw "Invalid arguments.";
+		}
+
+		while(counter < this.length) {
+			accumulatedValue = combiner(accumulatedValue, this[counter])
+			counter++;
+		}
+		return [accumulatedValue];
+	}
+};
+```
 
 ### concatAll
+```js
+Array.prototype.concatAll = function() {
+	var results = [];
+	this.forEach(function(subArray) {
+    subArray.forEach(function(i){
+    	results.push(i);
+    })
+	});
 
-### mapConcat
+	return results;
+};
+```
+
+### concatMap
+```js
+Array.prototype.concatMap = function(projectionFunctionThatReturnsArray) {
+	return this.
+		map(function(item) {
+      return projectionFunctionThatReturnsArray(item)
+		}).
+		concatAll();
+};
+```
 
 ### zip
+```js
+Array.zip = function(left, right, combinerFunction) {
+	var counter,
+		results = [];
+
+	for(counter = 0; counter < Math.min(left.length, right.length); counter++) {
+		results.push(combinerFunction(left[counter],right[counter]));
+	}
+
+	return results;
+};
+```
 
 ## Promise
+A promise is a container that holds the eventual result of
+an asynchronous operation.
+
+Keywords:
+- `then( response => {} )`
+- `catch( e => dosmthg(e)`
 
 ## Request
+Keywords
+- `const request = new Request('url string', initJSONObject)`
 
 ## Fetch
+The Fetch API is an interface that is used to make network requests.
+The Fetch API is a much needed improvement over XMLHttpRequest, the old API for making network request. The Fetch API is built into most modern browsers and also returns Promises.
 
+Keywords:
+- Request
+- Response
+- `'cors'` vs `'same-origin'`
 
 ## Generators
+Generators are functions that can be paused and resumed. 
+Generators can send out values when pausing and take in values when resuming.
+Generators are important because they allow asynchronous functions to written like normal synchronous functions.
+
+Moral of the story: Generators + async = 😜❤️
+
+Keywords:
+- `yield`
+- `function* foo()`
+- `generatorObject.next()`
+
 
 
