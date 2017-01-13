@@ -1,0 +1,13 @@
+
+                                                        url endpoint
+                                                     ________|_________
+                                                    |                  |
+                                            fetch( "https://foo/todos/1" )
+    returns Promise that has a Response ->      .then( response => {
+    returns a json object on resolve    ->          return response.json()
+                                                }
+                                             )
+                                             .then( result => {
+    do things with the json object      ->      console.log( result.title )
+                                                console.log( JSON.stringify(result))
+                                             })
