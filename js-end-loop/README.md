@@ -140,11 +140,16 @@ Generators can send out values when pausing and take in values when resuming.
 Generators are important because they allow asynchronous functions to written like normal synchronous functions.
 
 Moral of the story: Generators + async = 😜❤️
+Generator functions can yield a Promise, process the Promise result asynchronously, and then receive the Promise result back. 
+This allows asynchronous code to be written inside generator functions like normal synchronous functions. 
 
 Keywords:
+- `function*`
 - `yield`
+- `yield*`
 - `function* foo()`
 - `generatorObject.next()`
+- `return()`
 
 
 
