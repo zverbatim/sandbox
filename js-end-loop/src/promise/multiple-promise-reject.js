@@ -5,10 +5,11 @@ var promise3 = Promise.reject("error");
 
 Promise.all([promise1,promise2,promise3]).then(function(result) {
 
-    console.log(result) //logs the array ["hello",{age:2,height:188},42]
+    console.log(result)
 
 }).catch(function(error){
 
-    console.log(error)
+    // logs the error
+    console.error(error)
 
 });

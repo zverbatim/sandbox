@@ -114,8 +114,31 @@ Array.zip = function(left, right, combinerFunction) {
 ```
 
 ## Promise
-A promise is a container that holds the eventual result of
-an asynchronous operation.
+A promise is a container that holds the eventual result of an asynchronous operation.
+
+Sample:
+```js
+var promise = new Promise(function(resolve, reject) {
+
+    //do stuff
+
+    var isSuccessful = true;
+
+    if (isSuccessful) { /*if everything is successful*/
+        resolve("Success!");
+    }
+    else {              /*if something went wrong*/
+        reject(Error("Failure."));
+    }
+});
+```
+The `resolve()` function is used to change the status of the promise from pending to fulfilled. 
+The value that is passed inside the resolve() function becomes the fulfillment value of the promise.
+
+The `reject()` function is used to change the status of the promise from pending to rejected. 
+The value that is passed inside the reject() function becomes the rejection value of the promise.
+
+
 
 Keywords:
 - `then( response => {} )`
