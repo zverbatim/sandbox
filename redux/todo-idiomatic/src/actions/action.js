@@ -1,4 +1,3 @@
-import {v4} from "uuid";
 import * as api from "../api";
 import {getIsFetching} from "../reducers/createList";
 
@@ -31,11 +30,16 @@ export const fetchTodos = (filter) => (dispatch, getState) => {
     )
 }
 
-export const addTodo = (text) => ({
-    type: 'ADD_TODO',
-    text: text,
-    id: v4()
-})
+export const addTodo = (text) => (dispatch)=>
+    api.addTodo(text).then(
+        response => {
+            dispatch({
+                type: 'ADD_TODO_SUCCESS',
+                response
+            })
+        }
+    )
+
 
 
 export const toggleTodo = (id) => ({
