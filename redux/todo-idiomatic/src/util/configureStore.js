@@ -2,12 +2,16 @@
  * Function to handle the store creation
  */
 import {applyMiddleware, createStore} from "redux";
-import promise from 'redux-promise'
-import createLogger from 'redux-logger'
+import createLogger from "redux-logger";
 import reducer from "../reducers/index";
 
+const thunk = (store) => (next) => (action) =>
+    typeof action === 'function' ?
+        action(store.dispatch) :
+        next(action);
+
 const configureStore = () => {
-    const middleWares = [promise]
+    const middleWares = [thunk]
 
     // enable logging for dev
     if (process.env.NODE_ENV !== 'production') {
