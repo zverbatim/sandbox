@@ -2,12 +2,12 @@ import React from "react";
 
 const Todo = ({
     text,
-    complete,
+    completed,
     onClick
 }) => {
     return (
         <li onClick={onClick}
-            style={{textDecoration: complete ? 'line-through' : 'none'}}
+            style={{textDecoration: completed ? 'line-through' : 'none'}}
         >
             {text}
         </li>

@@ -13,7 +13,7 @@ const Todos = ({
                     <Todo
                         key={v4()}
                         text={todo.text}
-                        complete={todo.complete}
+                        completed={todo.completed}
                         onClick={() => onTodoClick(todo.id)}
                     />
                 )
