@@ -1,5 +1,5 @@
-import * as schema  from './schema'
-import {normalize} from 'normalizr';
+import * as schema from "./schema";
+import {normalize} from "normalizr";
 import * as api from "../api";
 import {getIsFetching} from "../reducers/createList";
 
@@ -21,12 +21,12 @@ export const fetchTodos = (filter) => (dispatch, getState) => {
             dispatch({
                 type: 'FETCH_TODOS_SUCCESS',
                 filter,
-                response:  normalized
+                response: normalized
             })
         },
         error => {
             dispatch({
-                type:'FETCH_TODOS_FAILURE',
+                type: 'FETCH_TODOS_FAILURE',
                 filter,
                 message: error.message || 'Something went wrong'
             })
@@ -34,7 +34,7 @@ export const fetchTodos = (filter) => (dispatch, getState) => {
     )
 }
 
-export const addTodo = (text) => (dispatch)=>
+export const addTodo = (text) => (dispatch) =>
     api.addTodo(text).then(
         response => {
             const normalized = normalize(response, schema.todoSchema)
@@ -46,9 +46,12 @@ export const addTodo = (text) => (dispatch)=>
     )
 
 
-
-export const toggleTodo = (id) => ({
-    type: 'TOGGLE_TODO',
-    id
-})
+export const toggleTodo = (id) => (dispatch) =>
+    api.toggleTodo(id).then(response => {
+        const normalized = normalize(response, schema.todoSchema)
+        dispatch({
+            type: 'TOGGLE_TODO_SUCCESS',
+            response: normalized
+        })
+    })
 
