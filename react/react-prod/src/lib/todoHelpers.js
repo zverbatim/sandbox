@@ -15,3 +15,5 @@ export const updateTodo = (list, updated) => {
         ...list.slice(updatedIndex+1)
     ]
 }
+
+export const deleteTodo = (list, id) => list.filter(todo => todo.id !== id)

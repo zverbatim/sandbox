@@ -44,3 +44,16 @@ li{
 .red {
   color: crimson;
 }
+
+li span.delete-item a {
+  visibility: hidden;
+}
+
+li:hover span.delete-item a{
+  visibility: visible;
+}
+
+span.delete-item a {
+  text-decoration: none;
+  color: crimson;
+}

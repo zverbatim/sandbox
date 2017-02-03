@@ -11,7 +11,9 @@ export const TodoList = (props) => (
                         key={todo.id}
                         {...todo}
                         handleToggle={props.handleToggle}
-                    />)
+                        handleClick={props.handleClick}
+                    />
+                )
             }
         </ul>
     </div>

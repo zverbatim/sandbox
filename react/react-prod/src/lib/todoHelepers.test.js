@@ -1,4 +1,4 @@
-import {addTodo, findById, updateTodo, toggleTodo} from './todoHelpers'
+import {addTodo, findById, updateTodo, toggleTodo, deleteTodo} from './todoHelpers'
 
 test('adding todo', ()=>{
     const before = [
@@ -27,7 +27,7 @@ test('search by id', ()=>{
 
     const result =  {id: 2, name: 'bar', isComplete: false}
 
-    expect(result). toEqual(findById(todos, 2))
+    expect(result). toEqual(findById(2, todos))
 
 })
 
@@ -51,4 +51,19 @@ test('toggle todo', ()=>{
     const before =  {id: 2, name: 'bar', isComplete: false}
     const after =  {id: 2, name: 'bar', isComplete: true}
     expect(after).toEqual(toggleTodo(before))
+})
+
+
+test('handle delete', ()=> {
+    const before = [
+        {id: 1, name: 'foo', isComplete: false},
+        {id: 2, name: 'bar', isComplete: true}
+    ]
+
+    const after = [
+        {id: 1, name: 'foo', isComplete: false},
+    ]
+
+    expect(after).toEqual(deleteTodo(before, 2))
+    expect(before).not.toBe(deleteTodo(before, 2))
 })
