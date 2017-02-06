@@ -41,8 +41,12 @@ li{
   list-style-type: none;
 }
 
-.red {
+.error {
   color: crimson;
+}
+
+.success {
+  color: forestgreen;
 }
 
 li span.delete-item a {

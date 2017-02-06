@@ -1,0 +1,24 @@
+{
+  "todos": [
+    {
+      "name": "dummy",
+      "isComplete": true,
+      "id": 1
+    },
+    {
+      "name": "aloha",
+      "isComplete": true,
+      "id": 13129
+    },
+    {
+      "name": "buna",
+      "isComplete": false,
+      "id": 51301
+    },
+    {
+      "name": "hello",
+      "isComplete": false,
+      "id": 79473
+    }
+  ]
+}
