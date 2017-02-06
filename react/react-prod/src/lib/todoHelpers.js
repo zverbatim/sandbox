@@ -1,6 +1,5 @@
 export const addTodo = (list, item) => [...list, item]
 
-
 export const generatedId = () => Math.floor(Math.random() * 100000)
 
 export const findById = (id, list) => list.find(it => it.id === id)

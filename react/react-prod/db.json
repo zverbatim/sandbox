@@ -2,22 +2,12 @@
   "todos": [
     {
       "name": "dummy",
-      "isComplete": true,
+      "isComplete": false,
       "id": 1
     },
     {
-      "name": "aloha",
-      "isComplete": true,
-      "id": 13129
-    },
-    {
-      "name": "buna",
-      "isComplete": false,
-      "id": 51301
-    },
-    {
       "name": "hello",
-      "isComplete": false,
+      "isComplete": true,
       "id": 79473
     }
   ]

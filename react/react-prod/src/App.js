@@ -105,6 +105,7 @@ class App extends Component {
                         currentTodo={this.state.currentTodo}
                         handleSubmit={submitHandler}
                     />
+
                     <TodoList
                         todos={displayTodos}
                         handleToggle={this.handleToggle}

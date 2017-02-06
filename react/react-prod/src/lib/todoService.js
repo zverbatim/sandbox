@@ -33,7 +33,6 @@ export const saveTodo = (todo) => {
         body: JSON.stringify(todo)
     })
         .then(res=>res.json())
-
 }
 
 
