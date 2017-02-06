@@ -17,3 +17,16 @@ export const updateTodo = (list, updated) => {
 }
 
 export const deleteTodo = (list, id) => list.filter(todo => todo.id !== id)
+
+export const filterTodo =(list, route) => {
+    switch (route){
+        case '/active':
+            return list.filter(todo => !todo.isComplete)
+        case '/complete':
+            return list.filter(todo => todo.isComplete)
+        default:
+            return list
+
+    }
+
+}

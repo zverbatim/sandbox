@@ -1,6 +1,6 @@
-import {addTodo, findById, updateTodo, toggleTodo, deleteTodo} from './todoHelpers'
+import {addTodo, deleteTodo, findById, toggleTodo, updateTodo, filterTodo} from "./todoHelpers";
 
-test('adding todo', ()=>{
+test('adding todo', () => {
     const before = [
         {id: 1, name: 'foo', isComplete: false}
     ]
@@ -19,25 +19,25 @@ test('adding todo', ()=>{
     expect(result).not.toBe(before)
 })
 
-test('search by id', ()=>{
+test('search by id', () => {
     const todos = [
         {id: 1, name: 'foo', isComplete: false},
         {id: 2, name: 'bar', isComplete: false}
     ]
 
-    const result =  {id: 2, name: 'bar', isComplete: false}
+    const result = {id: 2, name: 'bar', isComplete: false}
 
-    expect(result). toEqual(findById(2, todos))
+    expect(result).toEqual(findById(2, todos))
 
 })
 
-test('update todo', ()=>{
+test('update todo', () => {
     const todos = [
         {id: 1, name: 'foo', isComplete: false},
         {id: 2, name: 'bar', isComplete: true}
     ]
 
-    const toggled =  {id: 2, name: 'bar', isComplete: false}
+    const toggled = {id: 2, name: 'bar', isComplete: false}
 
     const result = [
         {id: 1, name: 'foo', isComplete: false},
@@ -47,14 +47,14 @@ test('update todo', ()=>{
     expect(result).toEqual(updateTodo(todos, toggled))
 })
 
-test('toggle todo', ()=>{
-    const before =  {id: 2, name: 'bar', isComplete: false}
-    const after =  {id: 2, name: 'bar', isComplete: true}
+test('toggle todo', () => {
+    const before = {id: 2, name: 'bar', isComplete: false}
+    const after = {id: 2, name: 'bar', isComplete: true}
     expect(after).toEqual(toggleTodo(before))
 })
 
 
-test('handle delete', ()=> {
+test('handle delete', () => {
     const before = [
         {id: 1, name: 'foo', isComplete: false},
         {id: 2, name: 'bar', isComplete: true}
@@ -66,4 +66,77 @@ test('handle delete', ()=> {
 
     expect(after).toEqual(deleteTodo(before, 2))
     expect(before).not.toBe(deleteTodo(before, 2))
+})
+
+
+test('display all todos', () => {
+    const before = [
+        {id: 1, name: 'foo', isComplete: false},
+        {id: 2, name: 'bar', isComplete: true},
+        {id: 3, name: 'zyx', isComplete: false}
+    ]
+
+    const route = '/all';
+
+    const result = [
+        {id: 1, name: 'foo', isComplete: false},
+        {id: 2, name: 'bar', isComplete: true},
+        {id: 3, name: 'zyx', isComplete: false}
+    ]
+
+    expect(result).toEqual(filterTodo(before, route))
+})
+
+test('display active todos', () => {
+    const before = [
+        {id: 1, name: 'foo', isComplete: false},
+        {id: 2, name: 'bar', isComplete: true},
+        {id: 3, name: 'zyx', isComplete: false}
+    ]
+
+    const route = '/active';
+
+    const result = [
+        {id: 1, name: 'foo', isComplete: false},
+        {id: 3, name: 'zyx', isComplete: false}
+    ]
+
+    expect(result).toEqual(filterTodo(before, route))
+})
+
+test('display completed todos', () => {
+    const before = [
+        {id: 1, name: 'foo', isComplete: false},
+        {id: 2, name: 'bar', isComplete: true},
+        {id: 3, name: 'zyx', isComplete: false}
+    ]
+
+
+    const route = '/complete';
+
+    const result = [
+        {id: 2, name: 'bar', isComplete: true}
+    ]
+
+    expect(result).toEqual(filterTodo(before, route))
+
+})
+
+
+test('display all todos for default route', () => {
+    const before = [
+        {id: 1, name: 'foo', isComplete: false},
+        {id: 2, name: 'bar', isComplete: true},
+        {id: 2, name: 'zyx', isComplete: false}
+    ]
+
+    const route = '/foo';
+
+    const result = [
+        {id: 1, name: 'foo', isComplete: false},
+        {id: 2, name: 'bar', isComplete: true},
+        {id: 2, name: 'zyx', isComplete: false}
+    ]
+
+    expect(result).toEqual(filterTodo(before, route))
 })
