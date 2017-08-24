@@ -1,0 +1,6 @@
+2017-08-24 11:22:06 INFO  Main:11 - dummy info message
+2017-08-24 11:22:06 ERROR Main:12 - dummy error message
+2017-08-24 11:22:06 DEBUG Main:13 - dummy debugg message
+2017-08-24 11:22:19 INFO  Main:11 - dummy info message
+2017-08-24 11:22:19 ERROR Main:12 - dummy error message
+2017-08-24 11:22:19 DEBUG Main:13 - dummy debugg message
