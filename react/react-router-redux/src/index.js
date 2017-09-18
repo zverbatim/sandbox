@@ -1,18 +1,10 @@
-// import React from 'react';
-// import ReactDOM from 'react-dom';
-// import App from './App';
-// ReactDOM.render(<App />, document.getElementById('root'));
-// registerServiceWorker();
-
 import registerServiceWorker from './registerServiceWorker';
 import React from 'react'
 import ReactDOM from 'react-dom'
-
 import {createStore, combineReducers, applyMiddleware} from 'redux'
 import {Provider} from 'react-redux'
-
 import createHistory from 'history/createBrowserHistory'
-import {Route} from 'react-router-dom'
+import {Route, Link} from 'react-router-dom'
 
 import {ConnectedRouter, routerReducer, routerMiddleware, push} from 'react-router-redux'
 
@@ -38,22 +30,44 @@ const Home = () => <p>Home</p>
 const About = () => <p>About</p>
 const Topics = () => <p>Topics</p>
 
+const Navigation = () => (
+  <nav>
+    <Link to="/">Home</Link>
+    <br/>
+    <Link to="/about">About</Link>
+    <br/>
+    <Link to="/topics">Topics</Link>
+  </nav>
+)
+
+
+const Routes = () => (
+  <div>
+    <Route exact path="/" component={Home}/>
+    <Route path="/about" component={About}/>
+    <Route path="/topics" component={Topics}/>
+  </div>
+)
+
+const App = () => (
+  <div>
+    <Navigation/>
+    <hr/>
+    <Routes/>
+  </div>
+)
+
 
 // Now you can dispatch navigation actions from anywhere!
 // store.dispatch(push('/foo'))
+
 ReactDOM.render(
   <Provider store={store}>
     { /* ConnectedRouter will use the store from Provider automatically */ }
     <ConnectedRouter history={history}>
-      <div>
-        <Route exact path="/" component={Home}/>
-        <Route path="/about" component={About}/>
-        <Route path="/topics" component={Topics}/>
-      </div>
+      <App {...store}/>
     </ConnectedRouter>
   </Provider>,
   document.getElementById('root')
 )
-
-// ReactDOM.render(<App />, document.getElementById('root'));
 registerServiceWorker();
