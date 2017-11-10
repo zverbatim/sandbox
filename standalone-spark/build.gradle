@@ -1,0 +1,14 @@
+
+apply plugin: 'java'
+apply plugin: 'idea'
+
+repositories {
+    jcenter()
+}
+
+// In this section you declare the dependencies for your production and test code
+dependencies {
+    compile 'org.slf4j:slf4j-api:1.7.25'
+    compile "com.sparkjava:spark-core:2.5.4"
+    testCompile 'junit:junit:4.12'
+}
