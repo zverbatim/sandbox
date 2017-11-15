@@ -2,7 +2,7 @@
 
 var _restify = require('restify');
 
-var _bot = require('./bot/bot5');
+var _bot = require('./bot/bot6');
 
 // Setup Restify Server
 const server = (0, _restify.createServer)();

@@ -10,3 +10,4 @@ $ES_HOME
 **/out
 **/*.class
 **/yarn.lock
+**/dist
