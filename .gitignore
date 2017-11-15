@@ -9,3 +9,4 @@ $ES_HOME
 **/node_modules
 **/out
 **/*.class
+**/yarn.lock
