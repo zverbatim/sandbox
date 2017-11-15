@@ -1,5 +1,5 @@
 import {createServer} from 'restify'
-import {connector} from './bot/bot6'
+import {connector} from './bot/bot7'
 
 // Setup Restify Server
 const server = createServer()
