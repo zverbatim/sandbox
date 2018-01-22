@@ -1,0 +1,14 @@
+{
+  "movies": [
+    {
+      "title": "Coco",
+      "releaseYear": 2017,
+      "genre": "ANIMATION"
+    },
+    {
+      "title": "Coco",
+      "releaseYear": 2017,
+      "genre": "ANIMATION"
+    }
+  ]
+}
