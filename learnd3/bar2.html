@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <script src="js/d3.js" charset="utf-8"></script>
+</head>
+<body>
+
+<script type="text/javascript">
+
+    var dataset = [10, 20, 30, 15, 20, 22],
+            w = 300,
+            h = 100,
+            padding = 2;
+
+    var svg = d3.select("body")
+            .append("svg")
+            .attr("width", w)
+            .attr("height", h);
+
+    svg.selectAll("rect")
+            .data(dataset)
+            .enter()
+            .append("rect")
+            .attr("x", function (d, i) {
+                return i * ( w / dataset.length);
+            })
+            .attr("y", function(d){
+                return h - d;                               // "grow" from bottom
+            })
+            .attr("width", w / dataset.length - padding)
+            .attr("height", function(d){
+                return d;
+            })
+            //.attr("fill", "rgba(200, 10, 10, 0.75)")
+            .attr("fill", function(d) {
+                return "rgb(0, 0, " + (d * 10) + ")";
+            });
+
+    // add the text
+    svg.selectAll("text")
+            .data(dataset)
+            .enter()
+            .append("text")
+            .text(function(d){
+                return d;
+            })
+            .attr("x", function (d, i) {
+                return i * ( w / dataset.length) + ((w / dataset.length - padding ) / 4);
+            })
+            .attr("y", function(d){
+                return h - d - padding;
+            });
+</script>
+</body>
+</html>

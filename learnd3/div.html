@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <script src="js/d3.js" charset="utf-8"></script>
+
+    <style>
+        .bar{
+            display: block;
+            width: 2px;
+            height: 2px;
+            background-color: #ccc;
+            margin-bottom: 1px;
+        }
+    </style>
+</head>
+<body>
+
+<script type="text/javascript">
+
+    var dataset = [];
+    for (var i = 0; i < 100000; i++)
+        dataset.push(i);
+    dataset.sort(function (a, b) {
+        return a - b
+    });
+
+    d3.select("body").selectAll("div")
+            .data(dataset)
+            .enter()
+            .append("div")
+            .attr("class", "bar")
+            .style("width", function (d) {
+                var barWidth = 0.0001 + d;
+                return barWidth + "px";
+            })
+</script>
+</body>
+</html>

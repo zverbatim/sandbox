@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <script src="js/jquery.js" charset="utf-8"></script>
+    <script src="js/d3.js" charset="utf-8"></script>
+    <script src="js/trend.js" charset="utf-8"></script>
+</head>
+<body>
+
+<script type="text/javascript">
+    $(function () {
+        var data = [
+            {
+                "date": "2015-01-10",
+                "metric": "Metric A",
+                "value": 20000
+            },
+            {
+                "date": "2015-01-11",
+                "metric": "Metric A",
+                "value": 20000
+            },
+            {
+                "date": "2015-01-12",
+                "metric": "Metric A",
+                "value": 1000
+            },
+            {
+                "date": "2015-01-13",
+                "metric": "Metric A",
+                "value": 2000
+            },
+            {
+                "date": "2015-01-14",
+                "metric": "Metric A",
+                "value": 4000
+            },
+            {
+                "date": "2015-01-15",
+                "metric": "Metric A",
+                "value": 15000
+            }
+        ];
+        trend("body", data);
+    });
+</script>
+</body>
+</html>

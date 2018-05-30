@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <script src="js/d3.js" charset="utf-8"></script>
+</head>
+<body>
+
+<div id="text-1"></div>
+<div id="text-2"></div>
+<div id="text-3"></div>
+<svg width="200" height="100"></svg>
+
+<script type="text/javascript">
+    var dataset = [5, 1, 15, 20, 25];
+
+    d3.select("#text-1").selectAll("p")        // selected before creating
+            .data(dataset)                     // counts and parse the array, everything past this point executed as many elements ar in the array
+            .enter()                           // creates new elements
+            .append("p")                       // creates <p>
+            .text("new");                      // inserts text inside <p></p>
+
+    d3.select("#text-2").selectAll("p")
+            .data(dataset)
+            .enter()
+            .append("p")
+            .text(function (d) {
+                return "p = " + d
+            })
+            .style("color", function(d){
+                return d > 15  ? "red" : "green"
+            });
+
+   /* // not working
+    d3.select("#text-3").selectAll("p")
+            .data(dataset)
+            .enter()
+            .append("p")
+            .text(doubleElement(d));*/
+
+    function doubleElement(i) {
+        return 2 * i;
+    }
+
+    d3.select("svg").selectAll("circle")
+            .data(dataset)
+            .enter()
+            .append("circle")
+            .attr("cx", function (d) {
+                return d * 10
+            })
+            .attr("cy", 50)
+            .attr("r", function (d) {
+                return d
+            })
+            .attr("fill", "#ccc");
+
+    var list  = d3.select("body").append("ul");
+
+    list.selectAll("li")
+            .data(dataset)
+            .enter()
+            .insert("li")
+            .text( function(d) { return d});
+
+</script>
+</body>
+</html>

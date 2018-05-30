@@ -1,0 +1,36 @@
+.d3-slider-axis {
+    font: 10px sans-serif;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+}
+
+.d3-slider-axis .d3-slider-domain {
+    fill: none;
+    stroke: #000;
+    stroke-opacity: .3;
+    stroke-width: 6px;
+    stroke-linecap: round;
+}
+
+.d3-slider-axis .d3-slider-halo {
+    fill: none;
+    stroke: #ddd;
+    stroke-width: 2px;
+    stroke-linecap: round;
+}
+
+.d3-slider-slider .d3-slider-handle {
+    stroke-opacity: .5;
+    cursor: crosshair;
+}
+
+.d3-slider-slider {
+    fill: #fff;
+    stroke: #000;
+}
+
+.d3-slider-handle {
+    fill: #337ab7;
+    stroke: #337ab7;
+}

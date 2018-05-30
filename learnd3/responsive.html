@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <script src="js/jquery.js" charset="utf-8"></script>
+    <script src="js/d3.js" charset="utf-8"></script>
+    <script src="js/top5.js" charset="utf-8"></script>
+    <script src="js/responsive.js" charset="utf-8"></script>
+</head>
+<body>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xs-12 col-sm-6 col-md-4">
+            <div id="viz-container"></div>
+        </div>
+        <div class="col-xs-12 col-sm-6 col-md-8" style="background-color: #ccc;">
+            <p>
+                Col 2
+            </p>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var planet = "#viz-container";
+
+        var w = parseInt($(planet).width()),
+                h = parseInt($(planet).height()) === 0 ? 200 : parseInt($("#viz-container").height());
+
+        var svgContainer = d3.select(planet).append("svg")
+                .attr("width", w)
+                .attr("height", h)
+                .call(responsivefy);
+
+        svgContainer.append("rect")
+                .attr("width", parseInt(svgContainer.style("width")) - 4)
+                .attr("height", parseInt(svgContainer.style("height")) - 4)
+                .attr("class", "pluto");
+    });
+</script>
+</body>
+</html>

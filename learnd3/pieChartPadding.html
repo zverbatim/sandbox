@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <link rel="stylesheet"  type="text/css" href="bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <script src="js/jquery.js" charset="utf-8"></script>
+    <script src="js/d3.js" charset="utf-8"></script>
+    <script src="js/pieChartPadding.js" charset="utf-8"></script>
+</head>
+<body>
+
+<script type="text/javascript">
+    var data = [
+        {
+            "metric": "Option A",
+            "value": 20000
+        },
+        {
+            "metric": "Option B",
+            "value": 10000
+        },
+        {
+            "metric": "Option C",
+            "value": 500
+        }
+    ];
+    $(function () {
+        pieChartPadding("body", data)
+    });
+</script>
+</body>
+</html>

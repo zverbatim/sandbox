@@ -1,0 +1,3 @@
+function lala(){
+    return "lala"
+}

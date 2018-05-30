@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+
+    <script src="js/jquery.js" charset="utf-8"></script>
+    <script src="js/d3.js" charset="utf-8"></script>
+    <script src="bootstrap/js/bootstrap.js" charset="utf-8"></script>
+    <script src="js/lineChart.js" charset="utf-8"></script>
+
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12 col-md-6">
+            <svg id="amznStockPriceByDate"></svg>
+        </div>
+        <div class="col-xs-12 col-md-6">
+            <svg id="amznStockPriceByHour"></svg>
+
+        </div>
+    </div>
+</div>
+
+
+<script>
+
+    // by date
+    d3.json("data/amznDate.json", function (error, json) {
+        if (error) {
+            console.error(error);
+        } else {
+            lineChart("#amznStockPriceByDate", json, "%Y-%m-%d");
+        }
+    });
+
+    // by hour
+    d3.json("data/amznHour.json", function (error, json) {
+        if (error) {
+            console.error(error);
+        } else {
+            lineChart("#amznStockPriceByHour", json, "%Y-%m-%d %H:%M:%S");
+        }
+    });
+</script>
+</body>
+</html>

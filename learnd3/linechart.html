@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <script src="js/d3.js" charset="utf-8"></script>
+
+    <style>
+        body {
+            background-color: #333333;
+        }
+
+        path {
+            stroke: #98ff1e;
+            stroke-width: 2;
+            fill: none;
+        }
+
+        .axis {
+            stroke: #aaaaaa;
+            stroke-width: 1;
+        }
+
+        .xLabel, .yLabel {
+            font-size: 12px;
+            font-family: sans-serif;
+            fill: #eeeeee;
+        }
+        .xLabel {
+            text-anchor: middle;
+        }
+
+        .yLabel {
+            text-anchor: end;
+        }
+        .xTick, .yTick {
+            stroke: #fcff26;
+            stroke-width: 2;
+        }
+
+        .xGrid, .yGrid {
+            stroke: #aaaaaa;
+        }
+
+    </style>
+</head>
+<body>
+
+<script type="text/javascript">
+
+
+    // Luxemburg GDP per capita 2010-2013
+    // http://data.worldbank.org/indicator/NY.GDP.PCAP.CD/countries?order=wbapi_data_value_2013%20wbapi_data_value%20wbapi_data_value-last&sort=desc&display=default
+
+    var gdp = [102857, 113738, 106022, 110664];
+    var w = 300,
+            h = 300,
+            paddingX = 25,
+            paddingY = 25,
+            tick = 5,
+            extraLeftPadding = 20;
+
+    var svg = d3.select("body")
+            .append("svg")
+            .attr("width", w)
+            .attr("height", h);
+
+    var yScale = d3.scale.linear()
+            .domain([0, d3.max(gdp)])
+            .range([paddingY, h - paddingY]);
+
+    var xScale = d3.scale.linear()
+            .domain([0, gdp.length])
+            .range([paddingX, w - paddingX]);
+
+    // they guy that will group all chart elements
+    // by transform it is positioned in the bottom left corner
+    var g = svg.append("svg:g")
+            .append("g")
+            .attr("transform", "translate(" + extraLeftPadding + "," + h + ")");
+
+    // line function (it's a svg path)
+    var line = d3.svg.line()
+            .x(function (d, i) {
+                return xScale(i)
+            })
+            .y(function (d) {
+                return -1 * yScale(d)
+            });
+
+    // the line schart styled with css
+    g.append("svg:path")
+            .attr("d", line(gdp));
+
+    // xAxis
+    g.append("svg:line")
+            .attr("x1", xScale(0))
+            .attr("y1", -yScale(0))
+            .attr("x2", xScale(w))
+            .attr("y2", -yScale(0))
+            .classed("axis", true);
+
+    // yAxis
+    g.append("svg:line")
+            .attr("x1", xScale(0))
+            .attr("x2", xScale(0))
+            .attr("y1", -yScale(0))
+            .attr("y2", -yScale(d3.max(gdp)) - paddingY)
+            .classed("axis", true);
+
+    //draw the xLabels
+    g.selectAll(".xLabel")
+            .data(xScale.ticks(5))
+            .enter().append("svg:text")
+            .attr("class", "xLabel")
+            .text(String)
+            .attr("x", function(d) { return xScale(d) })
+            .attr("y", 0)
+            .attr("text-anchor", "middle");
+
+    // draw the yLabels
+    g.selectAll(".yLabel")
+            .data(yScale.ticks(5))
+            .enter().append("svg:text")
+            .attr("class", "yLabel")
+            .text(String)
+            .attr("x", 25)
+            .attr("y", function(d) { return -yScale(d) })
+            .attr("text-anchor", "end");
+
+
+    // xTicks
+    g.selectAll(".xTick")
+            .data(xScale.ticks(5))
+            .enter().append("svg:line")
+            .attr("class", "xTick")
+            .attr("x1", function(d) { return xScale(d); })
+            .attr("y1", -yScale(0))
+            .attr("x2", function(d) { return xScale(d); })
+            .attr("y2", -yScale(0) - tick);
+
+    // yTicks
+    g.selectAll(".yTick")
+            .data(yScale.ticks(5))
+            .enter().append("svg:line")
+            .attr("class", "yTick")
+            .attr("y1", function(d) { return - yScale(d); })
+            .attr("x1", xScale(0) + tick)
+            .attr("y2", function(d) { return - yScale(d); })
+            .attr("x2", xScale(0));
+
+
+    //xGrid
+    g.selectAll(".xGrid")
+            .data(xScale.ticks(5))
+            .enter().append("svg:line")
+            .attr("class", "xGrid")
+            .attr("x1", function(d) { return xScale(d); })
+            .attr("y1", -yScale(0) - tick)
+            .attr("x2", function(d) { return xScale(d); })
+            .attr("y2", -yScale(d3.max(gdp)) - paddingY);
+
+    //yGrid
+    g.selectAll(".yGrid")
+            .data(yScale.ticks(5))
+            .enter().append("svg:line")
+            .attr("class", "yGrid")
+            .attr("y1", function(d) { return - yScale(d); })
+            .attr("x1", xScale(w))
+            .attr("y2", function(d) { return - yScale(d); })
+            .attr("x2", xScale(0)  + tick);
+
+    // dots
+    g.selectAll(".dot")
+            .data(gdp)
+            .enter()
+            .append("circle")
+            .attr("r", "4")
+            .attr("fill", "#ffffff")
+            .attr("cx", function(d, i){ return xScale(i) })
+            .attr("cy", function(d){ return -yScale(d) });
+
+</script>
+</body>
+</html>

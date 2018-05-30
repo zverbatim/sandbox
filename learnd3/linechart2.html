@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="css/style.css">
+    <script src="js/jquery.js" charset="utf-8"></script>
+    <script src="js/d3.js" charset="utf-8"></script>
+    <script src="js/chartSettings.js" charset="utf-8"></script>
+</head>
+<body>
+<div id="line-chart">
+
+</div>
+
+<script>
+    var gdp = [
+        {
+            "year": 2010,
+            "gdp": 102857
+        },
+        {
+            "year": 2011,
+            "gdp": 113738
+        },
+        {
+            "year": 2012,
+            "gdp": 106022
+        },
+        {
+            "year": 2013,
+            "gdp": 110664
+        }];
+
+    $(function () {
+        lineChart(gdp, "#line-chart");
+    });
+</script>
+</body>
