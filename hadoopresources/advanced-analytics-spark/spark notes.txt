@@ -1,0 +1,161 @@
+val rawBlocks = sc.textFile("linkage")
+
+def isNotHeader (line: String) = !line.contains("id_1")
+
+val noHeader = rawBlocks.filter(isNotHeader)
+
+val parsed = spark.read.option("header", true).option("nulValue","").option("inferSchema", "true").csv("linkage")
+parsed.printSchema()
+
+parsed.cache()
+
+parsed.groupBy("is_match").count().orderBy($"count".desc).show()
+
+// agg function on columns
+parsed.agg(avg($"cmp_sex")).show()
+
+// treating a datafreame as a tables
+// first create the view
+parsed.createOrReplaceTempView("linkage")
+
+spark.sql("select is_match, count(*) as cnt from linkage group by is_match order by cnt desc").show()
+
+// sumarizarization
+val summary = parsed.describe()
+summary.show()
+
+// specific fields
+summary.select("summary", "cmp_fname_c1", "cmp_fname_c2").show()
+
+// syntax similar to a valid WHERE clause in SQL
+val matches = parsed.where("is_match = true")
+val matchSummary = matches.describe()
+matchSummary.show()
+matchSummary.select("summary", "cmp_fname_c1", "cmp_fname_c2").show()
+
+val misses = parsed.filter($"is_match" === false)
+val missSummary = misses.describe()
+
+// pivoting and reshaping
+// all is string, need numbers to do calculations
+summary.printSchema()
+
+
+// skip the first column in the row 
+// cast all to Double
+var schema = summary.schema
+var longForm = summary.flatMap( row => {
+	val metric = row.getString(0)
+	(1 until row.size).map(i => {
+		(metric, schema(i).name, row.getString(i).toDouble)
+	})
+})
+
+// the results
+longForm.printSchema()
+longForm.show()
+//scala> :type longForm
+//org.apache.spark.sql.Dataset[(String, String, Double)]
+
+// pretty names for the cols
+val longDF = longForm.toDF("metric", "field", "value")
+longDF.show()
+
+// this one is org.apache.spark.sql.DataFrame. Previous one was a dataset
+:type longDF
+
+val wideDF = longDF.groupBy("field").pivot("metric", Seq("count", "mean", "stddev", "min", "max")).agg(first("value"))
+
+// Contents of Pivot.scala
+
+// load it in the shell
+:load Pivot.scala
+
+val matchSummaryT = pivotSummary(matchSummary)
+val missSummaryT = pivotSummary(missSummary)
+
+//join on the DF. using sql for ease of use
+matchSummaryT.createOrReplaceTempView("match_desc")
+missSummaryT.createOrReplaceTempView("miss_desc")
+
+spark.sql("select a.field, a.count+ b.count total, a.mean -b.mean delta from match_desc a inner join miss_desc b  on a.field = b.field where a.field not in ('id_1', 'id_2') order by delta desc, total desc").show()
+
+
+case MatchData(
+  id_1: Int,
+  id_2: Int,
+  cmp_fname_c1: Option[Double],
+  cmp_fname_c2: Option[Double],
+  cmp_lname_c1: Option[Double],
+  cmp_lname_c1: Option[Double],
+  cmp_sex: Option[Int],
+  cmp_bd: Option[Int],
+  cmp_bm: Option[Int],
+  cmp_by: Option[Int],
+  cmp_plz: Option[Int],
+  is_match: Boolean
+)
+
+import org.apache.spark.sql.types.DoubleType
+import org.apache.spark.sql.types.IntegerType
+import org.apache.spark.sql.types.BooleanType
+
+val p = parsed.withColumn("id_1", $"id_1".cast(IntegerType)).withColumn("id_2", $"id_2".cast(IntegerType)).withColumn("cmp_fname_c1", $"cmp_fname_c1".cast(DoubleType)).withColumn("cmp_fname_c2", $"cmp_fname_c2".cast(DoubleType)).withColumn("cmp_lname_c1", $"cmp_lname_c1".cast(DoubleType)).withColumn("cmp_lname_c2", $"cmp_lname_c2".cast(DoubleType)).withColumn("cmp_sex", $"cmp_sex".cast(IntegerType)).withColumn("cmp_bd", $"cmp_bd".cast(IntegerType)).withColumn("cmp_bm", $"cmp_bm".cast(IntegerType)).withColumn("cmp_by", $"cmp_by".cast(IntegerType)).withColumn("cmp_plz", $"cmp_plz".cast(IntegerType)).withColumn("is_match", $"is_match".cast(BooleanType)) 
+
+
+val scored = p.map {md => (scoreMatchData(md),md.getBoolean(11))}.toDF("score", "is_match")
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
